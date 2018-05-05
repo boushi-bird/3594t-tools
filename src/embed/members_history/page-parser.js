@@ -19,6 +19,7 @@ class PageParser {
       return null
     }
     const personal = this.baseData['PERSONAL'][parseInt(general.personal)]
+    const state = this.baseData['STATE'][parseInt(general['state'])].name
     const major = general['major_version']
     const verType = this.baseData['VER_TYPE'][parseInt(general['ver_type'])]
     const minor = verType.name === 'Ex' ? 'EX' : general['add_version']
@@ -27,6 +28,7 @@ class PageParser {
     return {
       name: personal.name,
       rarity: general.rarity,
+      state,
       version
     }
   }

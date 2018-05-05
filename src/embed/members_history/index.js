@@ -21,15 +21,17 @@ const run = async (document) => {
 
   let text = ''
   text += '[自分]\n'
-  selfDeck.forEach(general => {
-    text += `${general.version} ${general.rarity}${general.name}
+  const cardTemplate = (general) => {
+    return `${general.rarity}${general.name}(${general.version} ${general.state})
 `
+  }
+  selfDeck.forEach(general => {
+    text += cardTemplate(general)
   })
   text += '\n'
   text += '[相手]\n'
   opponentDeck.forEach(general => {
-    text += `${general.version} ${general.rarity}${general.name}
-`
+    text += cardTemplate(general)
   })
   const displayArea = document.createElement('textarea')
   displayArea.style.position = 'absolute'
