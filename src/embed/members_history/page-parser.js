@@ -22,7 +22,7 @@ class PageParser {
     const major = general['major_version']
     const verType = this.baseData['VER_TYPE'][parseInt(general['ver_type'])]
     const minor = verType.name === 'Ex' ? 'EX' : general['add_version']
-    const version = minor === '0' ? major : `${major}-${minor}`
+    const version = minor === '0' ? `第${major}弾` : `第${major}弾-${minor}`
 
     return {
       name: personal.name,

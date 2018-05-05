@@ -22,13 +22,13 @@ const run = async (document) => {
   let text = ''
   text += '[自分]\n'
   selfDeck.forEach(general => {
-    text += `第${general.version}弾 ${general.rarity}${general.name}
+    text += `${general.version} ${general.rarity}${general.name}
 `
   })
   text += '\n'
   text += '[相手]\n'
   opponentDeck.forEach(general => {
-    text += `第${general.version}弾 ${general.rarity}${general.name}
+    text += `${general.version} ${general.rarity}${general.name}
 `
   })
   const displayArea = document.createElement('textarea')
