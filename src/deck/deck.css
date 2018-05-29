@@ -1,0 +1,13 @@
+body {
+  background-color: green;
+}
+
+.general {
+  background-color: blue;
+  width: 100px;
+  height: 100px;
+}
+
+*[draggable=true].general {
+  cursor: pointer;
+}

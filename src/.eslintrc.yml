@@ -1,0 +1,18 @@
+extends:
+  - 'plugin:vue/essential'
+  - ../.eslintrc.yml
+env:
+  browser: true
+plugins:
+  - vue
+rules:
+  import/no-amd:
+    - error
+  import/no-commonjs:
+    - error
+settings:
+  import/resolver:
+    node:
+      extensions:
+        - .js
+        - .vue
