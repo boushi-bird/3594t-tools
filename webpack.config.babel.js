@@ -5,8 +5,11 @@ import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
 
+const isProduction = process.env.NODE_ENV === 'production'
+const mode = isProduction ? 'production' : 'development'
+
 export default {
-  mode: 'development',
+  mode,
   entry: {
     hub: path.resolve(__dirname, 'src/hub/index.js'),
     deck: path.resolve(__dirname, 'src/deck/index.js'),
@@ -27,10 +30,10 @@ export default {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin([
+    new CleanWebpackPlugin(isProduction ? [
       'docs/scripts',
       'docs/styles',
-    ]),
+    ] : []),
     new MiniCssExtractPlugin({
       filename: 'styles/[name].[chunkhash].css',
     }),

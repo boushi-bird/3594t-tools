@@ -1,7 +1,9 @@
 import path from 'path'
 
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development'
+
 export default {
-  mode: 'development',
+  mode,
   entry: [
     'babel-polyfill',
     path.resolve(__dirname, 'index.js'),

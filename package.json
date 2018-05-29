@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "build": "npm-run-all build:*",
-    "build:embed": "webpack --mode production --config src/embed/webpack.config.babel.js",
-    "build:main": "webpack --mode production",
+    "build:embed": "NODE_ENV=production webpack --config src/embed/webpack.config.babel.js",
+    "build:main": "NODE_ENV=production webpack",
     "dev:embed": "webpack-dev-server --config src/embed/webpack.config.babel.js",
     "dev:main": "webpack-dev-server",
     "build:bookmarklet": "NODE_ENV=production babel-node bin/build-bookmarklet.js | bookmarklet - > docs/bookmarklet/main.js",
