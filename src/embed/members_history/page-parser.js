@@ -1,4 +1,4 @@
-class PageParser {
+export default class PageParser {
   constructor (baseData) {
     this.baseData = baseData
   }
@@ -29,9 +29,7 @@ class PageParser {
       name: personal.name,
       rarity: general.rarity,
       state,
-      version
+      version,
     }
   }
 }
-
-module.exports = PageParser

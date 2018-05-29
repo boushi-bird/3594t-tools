@@ -1,7 +1,7 @@
-require('babel-polyfill')
-const { CrossStorageClient } = require('cross-storage')
-const { hubPageUrl } = require('../../defines')
-const PageParser = require('./page-parser')
+import 'babel-polyfill'
+import { CrossStorageClient } from 'cross-storage'
+import { hubPageUrl } from '../../defines'
+import PageParser from './page-parser'
 
 const run = async (document) => {
   const clinet = new CrossStorageClient(hubPageUrl)
@@ -44,8 +44,8 @@ const run = async (document) => {
   document.body.appendChild(displayArea)
 }
 
-module.exports.isPage = (location) => {
+const isPage = (location) => {
   return /^\/?members\/history\/detail\/?$/.test(location.pathname)
 }
 
-module.exports.run = run
+export { isPage, run }

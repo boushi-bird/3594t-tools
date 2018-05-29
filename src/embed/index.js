@@ -1,7 +1,7 @@
-const { scriptId } = require('../defines')
+import { scriptId } from '../defines'
 const pages = [
   require('./datalist/'),
-  require('./members_history/')
+  require('./members_history/'),
 ]
 
 const run = () => {

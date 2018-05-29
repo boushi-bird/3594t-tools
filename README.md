@@ -15,7 +15,7 @@ npm install
 下記を実行
 
 ```shell
-npm run dev
+npm run dev:embed
 # open https://localhost:8443
 ```
 

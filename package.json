@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "webpack-dev-server  --config src/embed/webpack.config.js",
+    "dev": "webpack-dev-server  --config src/embed/webpack.config.babel.js",
     "build": "npm-run-all build:*",
-    "build:embed": "webpack --mode production --config src/embed/webpack.config.js",
+    "build:embed": "webpack --mode production --config src/embed/webpack.config.babel.js",
     "build:main": "webpack --mode production",
-    "build:bookmarklet": "NODE_ENV=production node bin/build-bookmarklet.js | bookmarklet - > docs/bookmarklet/main.js",
-    "build:bookmarklet-dev": "node bin/build-bookmarklet.js | bookmarklet - > docs/bookmarklet/local.js",
+    "build:bookmarklet": "NODE_ENV=production babel-node bin/build-bookmarklet.js | bookmarklet - > docs/bookmarklet/main.js",
+    "build:bookmarklet-dev": "babel-node bin/build-bookmarklet.js | bookmarklet - > docs/bookmarklet/local.js",
     "lint": "eslint ."
   },
   "author": "boushi-bird <boushi-bird@users.noreply.github.com>",
@@ -17,6 +17,7 @@
     "cross-storage": "^1.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-polyfill": "^6.26.0",

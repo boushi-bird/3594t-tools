@@ -1,27 +1,27 @@
-const path = require('path')
+import path from 'path'
 
-module.exports = {
+export default {
   mode: 'development',
   entry: [
     'babel-polyfill',
-    path.resolve(__dirname, 'index.js')
+    path.resolve(__dirname, 'index.js'),
   ],
   output: {
     path: path.resolve(__dirname, '../../docs/'),
-    filename: 'embed.js'
+    filename: 'embed.js',
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel-loader'
-      }
-    ]
+        use: 'babel-loader',
+      },
+    ],
   },
   devServer: {
     host: '0.0.0.0',
     port: (process.env.PORT || 8443),
     https: true,
-    contentBase: path.resolve(__dirname, '../../docs/')
-  }
+    contentBase: path.resolve(__dirname, '../../docs/'),
+  },
 }

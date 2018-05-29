@@ -1,3 +1,15 @@
 extends: standard
 env:
   browser: true
+plugins:
+  - import
+rules:
+  comma-dangle:
+    - error
+    - always-multiline
+  import/no-amd:
+    - error
+  import/no-commonjs:
+    - error
+  import/no-unresolved:
+    - error

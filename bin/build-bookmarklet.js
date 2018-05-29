@@ -1,8 +1,6 @@
-#!/usr/bin/env node
-
-const path = require('path')
-const fs = require('fs')
-const { scriptId, embedJsUrl } = require('../src/defines')
+import path from 'path'
+import fs from 'fs'
+import { scriptId, embedJsUrl } from '../src/defines'
 
 const bookmarkletFile = path.resolve(__dirname, '../src/bookmarklet/index.js')
 

@@ -1,5 +1,5 @@
-const { CrossStorageClient } = require('cross-storage')
-const { hubPageUrl } = require('../../defines')
+import { CrossStorageClient } from 'cross-storage'
+import { hubPageUrl } from '../../defines'
 
 const run = async () => {
   if (!global.base_data) {
@@ -13,8 +13,8 @@ const run = async () => {
   alert('保存完了')
 }
 
-module.exports.isPage = (location) => {
+const isPage = (location) => {
   return /^\/?datalist\/?$/.test(location.pathname)
 }
 
-module.exports.run = run
+export { isPage, run }
