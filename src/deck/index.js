@@ -1,10 +1,10 @@
 import 'purecss'
-import 'purecss/build/grids-responsive.css'
 import './deck.css'
 import Vue from 'vue'
 import App from './App'
+import store from './store'
 
-const app = new Vue({
+new Vue({
   el: '#app',
   components: {
     App,
@@ -12,12 +12,6 @@ const app = new Vue({
   template: '<App />',
 })
 
-console.log(app)
-
-const generals = document.querySelectorAll('div[draggable=true].general')
-generals.forEach((general) => {
-  general.addEventListener('dragstart', (e) => {
-    // const { dataTransfer } = e
-    console.log(e)
-  })
+store.loadBaseData().then(() => {
+  console.log(store.state)
 })

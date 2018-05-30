@@ -2,6 +2,8 @@ extends: standard
 plugins:
   - import
 rules:
+  no-new:
+    - off
   comma-dangle:
     - error
     - always-multiline
