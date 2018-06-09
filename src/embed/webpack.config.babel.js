@@ -4,10 +4,7 @@ const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development
 
 export default {
   mode,
-  entry: [
-    'babel-polyfill',
-    path.resolve(__dirname, 'index.js'),
-  ],
+  entry: path.resolve(__dirname, 'index.js'),
   output: {
     path: path.resolve(__dirname, '../../docs/'),
     filename: 'embed.js',

@@ -1,9 +1,19 @@
 <template>
   <div class="general"
-    draggable="true"
-    @dragstart="dragstart"
+    :style="generalStyle"
     >
-    {{general.name}}
+    <img
+      class="thumbnail"
+      :src="general.thumbnail"
+      v-show="showImage"
+      alt=""
+      draggable="false"
+      />
+    <div class="shadow">
+    </div>
+    <div class="name">
+      <span class="rarity">{{general.rarity}}</span>{{general.name}}
+    </div>
   </div>
 </template>
 
@@ -15,13 +25,18 @@ export default {
       type: Object,
       require: true,
     },
+    showImage: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
   },
-  methods: {
-    dragstart (e) {
-      const { dataTransfer } = e
-      dataTransfer.effectAllowed = 'link'
-      dataTransfer.setData('text', JSON.stringify(this.general))
-      console.log(dataTransfer)
+  computed: {
+    generalStyle () {
+      let style = ''
+      const { red, green, blue } = this.general.stateColor
+      style += `background-color: rgba(${red}, ${green}, ${blue}, 1);`
+      return style
     },
   },
 }
@@ -29,10 +44,38 @@ export default {
 
 <style scoped>
 .general {
-  background-color: blue;
-  width: 100px;
-  height: 100px;
-  margin: 5px;
-  display: block;
+  position: relative;
+  width: 49px;
+  height: 179px;
+}
+
+.thumbnail {
+  width: 49px;
+  height: 179px;
+  object-fit: cover;
+}
+
+.shadow {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  opacity: 0;
+}
+
+.general .name {
+  writing-mode: vertical-rl;
+  position: absolute;
+  right: 0px;
+  bottom: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.general .name .rarity {
+  -webkit-text-combine: horizontal;
+  -ms-text-combine-horizontal: all;
+  text-combine-upright: all;
 }
 </style>

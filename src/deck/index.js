@@ -1,4 +1,8 @@
+import 'babel-polyfill'
 import 'purecss'
+// import 'purecss/build/menus.css'
+import 'whatwg-fetch'
+import './utils/dnd-polyfill'
 import './deck.css'
 import Vue from 'vue'
 import App from './App'
@@ -12,6 +16,4 @@ new Vue({
   template: '<App />',
 })
 
-store.loadBaseData().then(() => {
-  console.log(store.state)
-})
+store.loadBaseData()

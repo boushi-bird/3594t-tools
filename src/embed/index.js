@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import { scriptId } from '../defines'
 const pages = [
   require('./datalist/'),

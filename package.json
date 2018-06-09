@@ -16,8 +16,10 @@
   "license": "ISC",
   "dependencies": {
     "cross-storage": "^1.0.0",
+    "mobile-drag-drop": "^2.3.0-rc.1",
     "purecss": "^1.0.0",
-    "vue": "^2.5.16"
+    "vue": "^2.5.16",
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
     "autoprefixer": "^8.5.1",

@@ -1,11 +1,23 @@
 <template>
   <div>
-    <h2>デッキ</h2>
-    <div class="deck-container">
+    <h3>デッキ</h3>
+    <div>
+      コスト: {{state.currentDeck.cost}} /  {{state.deckConstraints.maxNumberOfCost}}
+      枚数: {{state.currentDeck.cards.length}} /  {{state.deckConstraints.maxNumberOfCards}}
+    </div>
+    <div class="deck-container"
+      @dragover="deckDragOver($event)"
+      @drop="deckDrop">
       <div class="deck">
-        <div class="slot" v-for="n in state.deckConstraints.maxNumberOfCards" :key="n">
-          <div class="slot-inner" @dragover="dragOver" @drop="drop">
-            {{n}}
+        <div class="slot"
+          v-for="(card, index) in state.currentDeck.cards"
+          :key="card.data.id">
+          <div class="slot-inner"
+            :class="slotInnerClass(index)"
+            @dragover="slotDragOver($event, index)"
+            @dragleave="slotDragLeave"
+            @drop="slotDrop($event, index)">
+            <GeneralCard :general="card.data" :show-image="true" />
           </div>
         </div>
       </div>
@@ -14,6 +26,7 @@
 </template>
 
 <script>
+import GeneralCard from './GeneralCard'
 import store from '../store'
 
 export default {
@@ -21,22 +34,52 @@ export default {
   data () {
     return {
       state: store.state,
+      currentSlotIndex: -1,
     }
   },
+  components: {
+    GeneralCard,
+  },
   methods: {
-    dragOver (e) {
-      e.preventDefault()
-      const { dataTransfer } = e
-      // if (dataTransfer.getData('text') === 'general') {
-      // }
-      dataTransfer.dropEffect = 'link'
-      console.log(dataTransfer.getData('text'))
-      // console.log('dropOver', dataTransfer)
+    deckDragOver ($event) {
+      $event.preventDefault()
+      const { dataTransfer } = $event
+      if (dataTransfer.dropEffect === 'none') {
+        dataTransfer.dropEffect = 'copy'
+      }
     },
-    drop (e) {
-      e.preventDefault()
-      const { dataTransfer } = e
-      console.log(dataTransfer.getData('text'))
+    deckDrop ($event) {
+      $event.stopPropagation()
+      const { dataTransfer } = $event
+      const id = dataTransfer.getData('text')
+      const general = store.findGeneral(id)
+      store.addCard('general', general)
+    },
+    slotDragOver ($event, index) {
+      $event.preventDefault()
+      const { dataTransfer } = $event
+      dataTransfer.dropEffect = 'link'
+      this.currentSlotIndex = index
+    },
+    slotDragLeave ($event) {
+      const { dataTransfer } = $event
+      if (dataTransfer.dropEffect === 'link') {
+        dataTransfer.dropEffect = 'none'
+      }
+      this.currentSlotIndex = -1
+    },
+    slotDrop ($event, index) {
+      $event.stopPropagation()
+      const { dataTransfer } = $event
+      const id = dataTransfer.getData('text')
+      const general = store.findGeneral(id)
+      store.replaceCard(index, 'general', general)
+      this.currentSlotIndex = -1
+    },
+    slotInnerClass (index) {
+      return {
+        active: (index === this.currentSlotIndex),
+      }
     },
   },
 }
@@ -44,6 +87,7 @@ export default {
 
 <style scoped>
 .deck-container {
+  background-color: #0daf79;
   width: 100%;
   white-space: nowrap;
   overflow-x: auto;
@@ -56,19 +100,26 @@ export default {
 
 .deck {
   display: flex;
+  height: 189px;
 }
 
 .slot {
-  background-color: skyblue;
-  width: 105px;
-  height: 105px;
+  background-color: #8a9491;
+  width: 49px;
+  min-width: 49px;
+  height: 179px;
   margin: 5px;
   display: block;
 }
 
 .slot-inner {
-  background-color: yellow;
-  width: 100px;
-  height: 100px;
+  width: 49px;
+  min-width: 49px;
+  height: 179px;
+}
+
+.slot-inner.active {
+  margin: -2px;
+  border: solid 2px #fe6011;
 }
 </style>

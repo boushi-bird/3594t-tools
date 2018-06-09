@@ -1,30 +1,24 @@
 <template>
   <div id="app">
     <div id="board-container">
-      <Board></Board>
+      <Board />
     </div>
     <div id="main-container">
-      <div class="cards">
-        <GeneralCard
-          v-for="(general, index) in state.generals"
-          :key="index"
-          :general="general">
-        </GeneralCard>
-      </div>
+      <SearchGenerals />
     </div>
   </div>
 </template>
 
 <script>
 import Board from './components/Board'
-import GeneralCard from './components/GeneralCard'
+import SearchGenerals from './components/SearchGenerals'
 import store from './store'
 
 export default {
   name: 'App',
   components: {
     Board,
-    GeneralCard,
+    SearchGenerals,
   },
   data () {
     return {
@@ -45,18 +39,12 @@ export default {
 }
 
 #board-container {
-  background-color: white;
+  background-color: #19c88e;
   width: 100%;
-  height: 200px;
+  /* height: 366px; */
 }
 
 #main-container {
   overflow-y: auto;
-}
-
-.cards {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
 }
 </style>

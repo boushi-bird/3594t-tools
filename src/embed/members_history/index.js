@@ -1,4 +1,3 @@
-import 'babel-polyfill'
 import { CrossStorageClient } from 'cross-storage'
 import { hubPageUrl } from '../../defines'
 import PageParser from './page-parser'
