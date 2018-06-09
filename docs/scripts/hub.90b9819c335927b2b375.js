@@ -81,12 +81,12 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 249);
+/******/ 	return __webpack_require__(__webpack_require__.s = 122);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 246:
+/***/ 119:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -358,7 +358,7 @@
 
 /***/ }),
 
-/***/ 247:
+/***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -817,26 +817,26 @@
 
 /***/ }),
 
-/***/ 248:
+/***/ 121:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 module.exports = {
-  CrossStorageClient: __webpack_require__(247),
-  CrossStorageHub: __webpack_require__(246)
+  CrossStorageClient: __webpack_require__(120),
+  CrossStorageHub: __webpack_require__(119)
 };
 
 /***/ }),
 
-/***/ 249:
+/***/ 122:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _crossStorage = __webpack_require__(248);
+var _crossStorage = __webpack_require__(121);
 
 _crossStorage.CrossStorageHub.init([{
   origin: /3594t\.net$/,
