@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="search-generals">
     <transition-group
       name="search-generals"
       class="cards">
@@ -66,6 +66,10 @@ export default {
 </script>
 
 <style scoped>
+.search-generals {
+  overflow-y: auto;
+}
+
 .cards {
   display: flex;
   flex-direction: row;

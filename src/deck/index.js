@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 import 'purecss'
-// import 'purecss/build/menus.css'
+import 'purecss/build/menus.css'
 import 'whatwg-fetch'
 import './utils/dnd-polyfill'
 import './deck.css'

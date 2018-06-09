@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h3>デッキ</h3>
-    <div>
+  <div class="board">
+    <div class="deck-info">
       コスト: {{state.currentDeck.cost}} /  {{state.deckConstraints.maxNumberOfCost}}
       枚数: {{state.currentDeck.cards.length}} /  {{state.deckConstraints.maxNumberOfCards}}
     </div>
@@ -86,9 +85,16 @@ export default {
 </script>
 
 <style scoped>
+.board {
+  background-color: #19c88e;
+}
+
+.deck-info {
+  text-align: right;
+}
+
 .deck-container {
   background-color: #0daf79;
-  width: 100%;
   white-space: nowrap;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
