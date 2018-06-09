@@ -1,6 +1,7 @@
 import path from 'path'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
@@ -26,6 +27,7 @@ export default {
   },
   optimization: {
     minimizer: [
+      new UglifyJsPlugin({}),
       new OptimizeCSSAssetsPlugin({}),
     ],
   },
