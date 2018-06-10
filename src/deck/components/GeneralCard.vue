@@ -47,6 +47,7 @@ export default {
   position: relative;
   width: 49px;
   height: 179px;
+  user-select: none;
 }
 
 .thumbnail {
