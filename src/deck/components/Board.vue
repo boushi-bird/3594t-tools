@@ -4,22 +4,33 @@
       コスト: {{state.currentDeck.cost}} /  {{state.deckConstraints.maxNumberOfCost}}
       枚数: {{state.currentDeck.cards.length}} /  {{state.deckConstraints.maxNumberOfCards}}
     </div>
-    <div class="deck-container"
+    <div class="deck-drop-area"
+      :class="deckDropAreaClass()"
+      @touchmove="disablePullScroll"
       @dragover="deckDragOver($event)"
       @drop="deckDrop">
-      <div class="deck">
+      <transition-group
+        name="deck-animation"
+        class="deck">
         <div class="slot"
           v-for="(card, index) in state.currentDeck.cards"
           :key="card.data.id">
           <div class="slot-inner"
             :class="slotInnerClass(index)"
+            draggable="true"
+            @dragstart="slotDragStart($event, card.data)"
+            @dragend="slotDragEnd"
             @dragover="slotDragOver($event, index)"
             @dragleave="slotDragLeave"
             @drop="slotDrop($event, index)">
-            <GeneralCard :general="card.data" :show-image="true" />
+            <GeneralCard
+              :general="card.data"
+              :show-image="true"
+              v-show="dragging !== card.data"
+              />
           </div>
         </div>
-      </div>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -34,6 +45,7 @@ export default {
     return {
       state: store.state,
       currentSlotIndex: -1,
+      dragging: null,
     }
   },
   components: {
@@ -43,8 +55,13 @@ export default {
     deckDragOver ($event) {
       $event.preventDefault()
       const { dataTransfer } = $event
-      if (dataTransfer.dropEffect === 'none') {
+      if (dataTransfer.dropEffect === 'link') {
+        return
+      }
+      if (store.isAddable()) {
         dataTransfer.dropEffect = 'copy'
+      } else {
+        dataTransfer.dropEffect = 'none'
       }
     },
     deckDrop ($event) {
@@ -53,6 +70,15 @@ export default {
       const id = dataTransfer.getData('text')
       const general = store.findGeneral(id)
       store.addCard('general', general)
+    },
+    slotDragStart ($event, general) {
+      const { dataTransfer } = $event
+      dataTransfer.effectAllowed = 'linkMove'
+      dataTransfer.setData('text', general.id)
+      this.dragging = general
+    },
+    slotDragEnd ($event) {
+      this.dragging = null
     },
     slotDragOver ($event, index) {
       $event.preventDefault()
@@ -75,6 +101,15 @@ export default {
       store.replaceCard(index, 'general', general)
       this.currentSlotIndex = -1
     },
+    disablePullScroll ($event) {
+      // iOS Chromeで pull to refleshが走るのを防止
+      $event.preventDefault()
+    },
+    deckDropAreaClass () {
+      return {
+        invalid: (this.state.currentDeck.constraintViolations.length > 0),
+      }
+    },
     slotInnerClass (index) {
       return {
         active: (index === this.currentSlotIndex),
@@ -93,14 +128,18 @@ export default {
   text-align: right;
 }
 
-.deck-container {
+.deck-drop-area {
   background-color: #0daf79;
   white-space: nowrap;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-.deck-container::-webkit-scrollbar {
+.deck-drop-area.invalid {
+  background-color: #323534;
+}
+
+.deck-drop-area::-webkit-scrollbar {
   display: none;
 }
 
@@ -110,11 +149,11 @@ export default {
 }
 
 .slot {
-  background-color: #8a9491;
   width: 49px;
   min-width: 49px;
   height: 179px;
   margin: 5px;
+  transition: all 0.5s;
   display: block;
 }
 
@@ -127,5 +166,13 @@ export default {
 .slot-inner.active {
   margin: -2px;
   border: solid 2px #fe6011;
+}
+
+.deck-animation-enter {
+  opacity: 0;
+}
+
+.deck-animation-leave-active {
+  position: absolute;
 }
 </style>

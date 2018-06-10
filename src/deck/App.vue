@@ -9,7 +9,7 @@
       <Menu />
     </div>
     <div id="main" @click="closeMenu">
-      <Board />
+      <Board v-show="state.showDeck" />
       <SearchGenerals />
     </div>
   </div>

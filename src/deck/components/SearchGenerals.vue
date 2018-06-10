@@ -1,5 +1,9 @@
 <template>
-  <div class="search-generals">
+  <div
+    class="search-generals"
+    @dragover="cardDragOver($event)"
+    @drop="cardDrop"
+    >
     <transition-group
       name="search-generals"
       class="cards">
@@ -10,7 +14,7 @@
         >
         <div
           class="draggable-card"
-          draggable="true"
+          :draggable="state.showDeck"
           @dragstart="cardDragStart($event, general)"
           @dragend="cardDragEnd"
           >
@@ -45,6 +49,9 @@ export default {
       return this.state.generals
         .filter((general) => {
           const { cards } = this.state.currentDeck
+          if (!this.state.showDeck) {
+            return cards
+          }
           return !cards.some(({ type, data }) => {
             return general === data
           })
@@ -54,12 +61,26 @@ export default {
   methods: {
     cardDragStart ($event, general) {
       const { dataTransfer } = $event
-      dataTransfer.effectAllowed = 'all'
+      dataTransfer.effectAllowed = 'copyLink'
       dataTransfer.setData('text', general.id)
       this.dragging = general
     },
     cardDragEnd ($event) {
       this.dragging = null
+    },
+    cardDragOver ($event) {
+      $event.preventDefault()
+      const { dataTransfer } = $event
+      dataTransfer.dropEffect = 'move'
+    },
+    cardDrop ($event) {
+      $event.stopPropagation()
+      const { dataTransfer } = $event
+      const id = dataTransfer.getData('text')
+      const general = store.findGeneral(id)
+      if (general) {
+        store.removeCard('general', general)
+      }
     },
   },
 }
@@ -88,9 +109,8 @@ export default {
   margin: 5px;
 }
 
-.search-generals-enter, .search-generals-leave-to {
+.search-generals-enter {
   opacity: 0;
-  transform: translateY(-40px);
 }
 
 .search-generals-leave-active {
