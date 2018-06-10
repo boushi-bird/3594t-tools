@@ -1,12 +1,9 @@
 import 'babel-polyfill'
 import { scriptId } from '../defines'
-const pages = [
-  require('./datalist/'),
-  require('./members_history/'),
-]
+import PageConponents from './page-components'
 
 const run = () => {
-  const page = pages.find(p => p.isPage(location))
+  const page = PageConponents.find(p => p.isPage(location))
   if (page) {
     page.run(document)
   }

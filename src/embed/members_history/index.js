@@ -47,4 +47,4 @@ const isPage = (location) => {
   return /^\/?members\/history\/detail\/?$/.test(location.pathname)
 }
 
-export { isPage, run }
+export default { isPage, run }
