@@ -42,41 +42,36 @@ export default {
 }
 </script>
 
-<style scoped>
-.general {
-  position: relative;
-  width: 49px;
-  height: 179px;
-  user-select: none;
-}
+<style lang="stylus" scoped>
+.general
+  position: relative
+  width: 49px
+  height: 179px
+  user-select: none
 
-.thumbnail {
-  width: 49px;
-  height: 179px;
-  object-fit: cover;
-}
+.thumbnail
+  width: 49px
+  height: 179px
+  object-fit: cover
 
-.shadow {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  opacity: 0;
-}
+.shadow
+  width: 100%
+  height: 100%
+  position: absolute
+  top: 0px
+  left: 0px
+  opacity: 0
 
-.general .name {
-  writing-mode: vertical-rl;
-  position: absolute;
-  right: 0px;
-  bottom: 5px;
-  color: white;
-  font-weight: bold;
-}
+.general .name
+  writing-mode: vertical-rl
+  position: absolute
+  right: 0px
+  bottom: 5px
+  color: white
+  font-weight: bold
 
-.general .name .rarity {
-  -webkit-text-combine: horizontal;
-  -ms-text-combine-horizontal: all;
-  text-combine-upright: all;
-}
+.general .name .rarity
+  -webkit-text-combine: horizontal
+  -ms-text-combine-horizontal: all
+  text-combine-upright: all
 </style>

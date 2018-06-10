@@ -75,6 +75,15 @@ export default {
           'postcss-loader',
         ],
       },
+      {
+        test: /\.styl(us)?$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'stylus-loader',
+        ],
+      },
     ],
   },
   devServer: {
