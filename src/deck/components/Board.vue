@@ -159,9 +159,11 @@ export default {
   margin: -2px
   border: solid 2px #fe6011
 
-.deck-animation-enter
+.deck-animation-enter,
+.deck-animation-leave-to
   opacity: 0
 
 .deck-animation-leave-active
   position: absolute
+  display: none
 </style>
