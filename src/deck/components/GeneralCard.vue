@@ -68,7 +68,6 @@ export default {
   right: 0px
   bottom: 5px
   color: white
-  font-weight: bold
 
 .general .name .rarity
   -webkit-text-combine: horizontal
