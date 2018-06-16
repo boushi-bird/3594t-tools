@@ -16,6 +16,8 @@
   "license": "ISC",
   "dependencies": {
     "cross-storage": "^1.0.0",
+    "intersection-observer": "^0.5.0",
+    "lozad": "^1.4.0",
     "mobile-drag-drop": "^2.3.0-rc.1",
     "purecss": "^1.0.0",
     "vue": "^2.5.16",

@@ -3,8 +3,8 @@
     :style="generalStyle"
     >
     <img
-      class="thumbnail"
-      :src="general.thumbnail"
+      class="thumbnail lozad"
+      :data-src="general.thumbnail"
       v-show="showImage"
       alt=""
       draggable="false"
@@ -18,16 +18,18 @@
 </template>
 
 <script>
+import lazyload from '../utils/lazyload'
+
 export default {
   name: 'GeneralCard',
   props: {
     general: {
       type: Object,
-      require: true,
+      required: true,
     },
     showImage: {
       type: Boolean,
-      require: false,
+      required: true,
       default: false,
     },
   },
@@ -38,6 +40,9 @@ export default {
       style += `background-color: rgba(${red}, ${green}, ${blue}, 1);`
       return style
     },
+  },
+  mounted () {
+    lazyload.observe()
   },
 }
 </script>
