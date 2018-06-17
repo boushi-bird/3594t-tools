@@ -1,13 +1,14 @@
-(function (w, d, u, i, s) {
-  if (w[i]) {
-    return w[i]();
+(function (window, document, jsUrl, scriptId, scriptElement) {
+  // test
+  if (window[scriptId]) {
+    return window[scriptId]();
   }
-  s = d.getElementById(i);
-  if (s) {
+  scriptElement = document.getElementById(scriptId);
+  if (scriptElement) {
     return;
   }
-  s = d.createElement('script');
-  s.src = u;
-  s.id = i;
-  d.body.appendChild(s);
+  scriptElement = document.createElement('script');
+  scriptElement.src = jsUrl;
+  scriptElement.id = scriptId;
+  document.body.appendChild(scriptElement);
 })(window, document, '<JS_URL>', '<SCRIPT_ID>');
