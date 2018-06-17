@@ -52,8 +52,12 @@ export default {
   padding-left: 0;
 }
 
-#app.active #toggle-menu {
-  left: 150px;
+#toggle-menu {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
 
 #side-menu {
@@ -70,23 +74,19 @@ export default {
   -webkit-overflow-scrolling: touch;
 }
 
-#app.active #side-menu {
-  left: 150px;
-  width: 150px;
-}
-
-#toggle-menu {
-  display: block;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  z-index: 10;
-}
-
 #app,
 #side-menu,
 #toggle-menu {
   transition: all 0.2s ease-out;
+}
+
+#app.active #toggle-menu {
+  left: 150px;
+}
+
+#app.active #side-menu {
+  left: 150px;
+  width: 150px;
 }
 
 #main {

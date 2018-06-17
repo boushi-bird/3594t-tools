@@ -1,6 +1,6 @@
 body {
   background-color: #94e9cd;
-  font-family: 'Noto Sans Japanese';
+  font-family: 'Noto Sans Japanese', sans-serif;
 }
 
 *[draggable=true] {
@@ -9,7 +9,7 @@ body {
 
 .hamburger {
   cursor: pointer;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   font-size: 10px;
   width: 2em;
   height: auto;
@@ -27,20 +27,20 @@ body {
 }
 
 .hamburger span,
-.hamburger span:before,
-.hamburger span:after {
+.hamburger span::before,
+.hamburger span::after {
   background-color: #fff;
   width: 100%;
   height: 0.2em;
 }
 
-.hamburger span:before,
-.hamburger span:after {
+.hamburger span::before,
+.hamburger span::after {
   position: absolute;
   margin-top: -0.6em;
   content: " ";
 }
 
-.hamburger span:after {
+.hamburger span::after {
   margin-top: 0.6em;
 }

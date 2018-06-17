@@ -13,7 +13,9 @@
     "deploy": "npm run build && npm run deploy-only",
     "deploy-only": "gh-pages -d dist --dotfiles -m \"Build from commit $(git log -n 1 --format=%h)\"",
     "clean-deploy": "gh-pages-clean && npm run deploy",
-    "lint": "eslint --ext .js,.vue ."
+    "lint": "npm-run-all -c lint:*",
+    "lint:js": "eslint --ext .js,.vue .",
+    "lint:css": "stylelint '**/*.{css,vue}'"
   },
   "author": "boushi-bird <boushi-bird@users.noreply.github.com>",
   "license": "ISC",
@@ -49,6 +51,9 @@
     "optimize-css-assets-webpack-plugin": "^4.0.2",
     "postcss": "^6.0.22",
     "postcss-loader": "^2.1.5",
+    "stylelint": "^9.3.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-processor-html": "^1.0.0",
     "uglify-es": "^3.3.9",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "vue-loader": "^15.2.2",
