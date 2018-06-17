@@ -1,4 +1,6 @@
-/docs/base.json
+/dist/
+!/dist/.gitignore
+!/dist/.nojekyll
 
 # Created by https://www.gitignore.io/api/node,macos,windows,linux
 

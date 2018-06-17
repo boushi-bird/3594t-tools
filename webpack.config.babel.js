@@ -16,7 +16,7 @@ export default {
     deck: path.resolve(__dirname, 'src/deck/index.js'),
   },
   output: {
-    path: path.resolve(__dirname, 'docs'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'scripts/[name].[chunkhash].js',
   },
   resolve: {
@@ -33,8 +33,8 @@ export default {
   },
   plugins: [
     new CleanWebpackPlugin(isProduction ? [
-      'docs/scripts',
-      'docs/styles',
+      'dist/scripts',
+      'dist/styles',
     ] : []),
     new MiniCssExtractPlugin({
       filename: 'styles/[name].[chunkhash].css',
@@ -88,6 +88,6 @@ export default {
   },
   devServer: {
     host: '0.0.0.0',
-    contentBase: path.resolve(__dirname, './docs/'),
+    contentBase: path.resolve(__dirname, './dist/'),
   },
 }

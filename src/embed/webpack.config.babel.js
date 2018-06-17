@@ -6,7 +6,7 @@ export default {
   mode,
   entry: path.resolve(__dirname, 'index.js'),
   output: {
-    path: path.resolve(__dirname, '../../docs/'),
+    path: path.resolve(__dirname, '../../dist/'),
     filename: 'embed.js',
   },
   module: {
@@ -21,6 +21,6 @@ export default {
     host: '0.0.0.0',
     port: (process.env.PORT || 8443),
     https: true,
-    contentBase: path.resolve(__dirname, '../../docs/'),
+    contentBase: path.resolve(__dirname, '../../dist/'),
   },
 }
