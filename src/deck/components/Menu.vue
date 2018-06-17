@@ -17,48 +17,58 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-a.pure-menu-heading
-  font-size: 125%
-  color: #adcec3
-  cursor: pointer
+<style scoped>
+a.pure-menu-heading {
+  font-size: 125%;
+  color: #adcec3;
+  cursor: pointer;
+}
 
-a.pure-menu-link
-  color: #adcec3
-  cursor: pointer
+a.pure-menu-link {
+  color: #adcec3;
+  cursor: pointer;
+}
 
 .pure-menu li a:hover,
-.pure-menu li a:focus
-  background-color: #157656
+.pure-menu li a:focus {
+  background-color: #157656;
+}
 
-// .container a
-//   color: #999
-//   border: none
-//   padding: 0.6em 0 0.6em 0.6em
-//   cursor: pointer
-//
-// .container .pure-menu,
-// .container .pure-menu ul
-//   border: none
-//   background: transparent
-//
-// .container .pure-menu ul,
-// .container .pure-menu .menu-item-divided
-//   border-top: 1px solid #333
-//
-// .container .pure-menu li a:hover,
-// .container .pure-menu li a:focus
-//   background: #157656
-//
-// .container .pure-menu-selected,
-// .container .pure-menu-heading
-//   background: #157656
-//
-// .container .pure-menu-selected a
-//   color: #fff
-//
-// .container .pure-menu-heading
-//   font-size: 110%
-//   color: #fff
-//   margin: 0
+/* .container a {
+  color: #999;
+  border: none;
+  padding: 0.6em 0 0.6em 0.6em;
+  cursor: pointer;
+}
+
+.container .pure-menu,
+.container .pure-menu ul {
+  border: none;
+  background: transparent;
+}
+
+.container .pure-menu ul,
+.container .pure-menu .menu-item-divided {
+  border-top: 1px solid #333;
+}
+
+.container .pure-menu li a:hover,
+.container .pure-menu li a:focus {
+  background: #157656;
+}
+
+.container .pure-menu-selected,
+.container .pure-menu-heading {
+  background: #157656;
+}
+
+.container .pure-menu-selected a {
+  color: #fff;
+}
+
+.container .pure-menu-heading {
+  font-size: 110%;
+  color: #fff;
+  margin: 0;
+} */
 </style>

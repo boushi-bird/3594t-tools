@@ -119,51 +119,62 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.board
-  background-color: #19c88e
+<style scoped>
+.board {
+  background-color: #19c88e;
+}
 
-.deck-info
-  text-align: right
+.deck-info {
+  text-align: right;
+}
 
-.deck-drop-area
-  background-color: #0daf79
-  white-space: nowrap
-  overflow-x: auto
-  -webkit-overflow-scrolling: touch
+.deck-drop-area {
+  background-color: #0daf79;
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
-.deck-drop-area.invalid
-  background-color: #323534
+.deck-drop-area.invalid {
+  background-color: #323534;
+}
 
-.deck-drop-area::-webkit-scrollbar
-  display: none
+.deck-drop-area::-webkit-scrollbar {
+  display: none;
+}
 
-.deck
-  display: flex
-  height: 189px
+.deck {
+  display: flex;
+  height: 189px;
+}
 
-.slot
-  width: 49px
-  min-width: 49px
-  height: 179px
-  margin: 5px
-  transition: all 0.5s
-  display: block
+.slot {
+  width: 49px;
+  min-width: 49px;
+  height: 179px;
+  margin: 5px;
+  transition: all 0.5s;
+  display: block;
+}
 
-.slot-inner
-  width: 49px
-  min-width: 49px
-  height: 179px
+.slot-inner {
+  width: 49px;
+  min-width: 49px;
+  height: 179px;
+}
 
-.slot-inner.active
-  margin: -2px
-  border: solid 2px #fe6011
+.slot-inner.active {
+  margin: -2px;
+  border: solid 2px #fe6011;
+}
 
 .deck-animation-enter,
-.deck-animation-leave-to
-  opacity: 0
+.deck-animation-leave-to {
+  opacity: 0;
+}
 
-.deck-animation-leave-active
-  position: absolute
-  display: none
+.deck-animation-leave-active {
+  position: absolute;
+  display: none;
+}
 </style>

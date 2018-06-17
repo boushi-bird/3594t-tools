@@ -1,7 +1,7 @@
 import 'purecss'
 import 'purecss/build/menus.css'
 import './polyfills'
-import './deck.styl'
+import './deck.css'
 import Vue from 'vue'
 import App from './App'
 import store from './store'

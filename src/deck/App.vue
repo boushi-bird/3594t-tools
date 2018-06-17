@@ -45,76 +45,92 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-#app
-  position: relative
-  left: 0
-  padding-left: 0
+<style scoped>
+#app {
+  position: relative;
+  left: 0;
+  padding-left: 0;
+}
 
-#app.active #toggle-menu
-  left: 150px
+#app.active #toggle-menu {
+  left: 150px;
+}
 
-#side-menu
-  margin-left: -150px
-  width: 150px
-  position: fixed
-  top: 0
-  left: 0
-  bottom: 0
-  z-index: 1000
-  color: #777
-  background-color: #13372b
-  overflow-y: auto
-  -webkit-overflow-scrolling: touch
+#side-menu {
+  margin-left: -150px;
+  width: 150px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  color: #777;
+  background-color: #13372b;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
-#app.active #side-menu
-  left: 150px
-  width: 150px
+#app.active #side-menu {
+  left: 150px;
+  width: 150px;
+}
 
-#toggle-menu
-  display: block
-  position: fixed
-  top: 0px
-  left: 0px
-  z-index: 10
+#toggle-menu {
+  display: block;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+}
 
 #app,
 #side-menu,
-#toggle-menu
-  transition: all 0.2s ease-out
+#toggle-menu {
+  transition: all 0.2s ease-out;
+}
 
-#main
-  width: 100%
-  height: 100%
-  position: fixed
-  display: flex
-  flex-direction: column
-  flex-wrap: nowrap
+#main {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
 
-@media (min-width: 640px)
-  #app
-    padding-left: 150px
-    left: 0
+@media (min-width: 640px) {
+  #app {
+    padding-left: 150px;
+    left: 0;
+  }
 
-  #side-menu
-    left: 150px
+  #side-menu {
+    left: 150px;
+  }
 
-  #toggle-menu
-    position: fixed
-    left: 150px
-    display: none
+  #toggle-menu {
+    position: fixed;
+    left: 150px;
+    display: none;
+  }
 
-  #app.active #toggle-menu
-    left: 150px
+  #app.active #toggle-menu {
+    left: 150px;
+  }
 
-  #main
-    width: calc(100% - 150px)
+  #main {
+    width: calc(100% - 150px);
+  }
+}
 
-@media (max-width: 640px)
-  #app.active
-    position: relative
-    left: 150px
+@media (max-width: 640px) {
+  #app.active {
+    position: relative;
+    left: 150px;
+  }
 
-  #app.active #main
-    width: calc(100% - 150px)
+  #app.active #main {
+    width: calc(100% - 150px);
+  }
+}
 </style>

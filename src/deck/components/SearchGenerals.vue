@@ -86,28 +86,34 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.search-generals
-  overflow-y: auto
+<style scoped>
+.search-generals {
+  overflow-y: auto;
+}
 
-.cards
-  display: flex
-  flex-direction: row
-  flex-wrap: wrap
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 
-.card
-  transition: all 0.5s
-  display: block
+.card {
+  transition: all 0.5s;
+  display: block;
+}
 
-.draggable-card
-  width: 49px
-  min-width: 49px
-  height: 179px
-  margin: 5px
+.draggable-card {
+  width: 49px;
+  min-width: 49px;
+  height: 179px;
+  margin: 5px;
+}
 
-.search-generals-enter
-  opacity: 0
+.search-generals-enter {
+  opacity: 0;
+}
 
-.search-generals-leave-active
-  position: absolute
+.search-generals-leave-active {
+  position: absolute;
+}
 </style>
