@@ -10,7 +10,8 @@
     "dev:main": "webpack-dev-server",
     "build:bookmarklet": "NODE_ENV=production babel-node bin/build-bookmarklet.js | bookmarklet - > bookmarklet/main.js",
     "build:bookmarklet-dev": "babel-node bin/build-bookmarklet.js | bookmarklet - > bookmarklet/local.js",
-    "deploy": "gh-pages -d dist --dotfiles -m \"$(git log -n 1 --format=%h)\"",
+    "deploy": "npm run build && npm run deploy-only",
+    "deploy-only": "gh-pages -d dist --dotfiles -m \"Build from commit $(git log -n 1 --format=%h)\"",
     "clean-deploy": "gh-pages-clean && npm run deploy",
     "lint": "eslint --ext .js,.vue ."
   },
