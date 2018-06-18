@@ -50,6 +50,8 @@
     "npm-run-all": "^4.1.2",
     "optimize-css-assets-webpack-plugin": "^4.0.2",
     "postcss": "^6.0.22",
+    "postcss-custom-properties": "^7.0.0",
+    "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.5",
     "stylelint": "^9.3.0",
     "stylelint-config-standard": "^18.2.0",

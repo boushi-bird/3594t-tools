@@ -1,5 +1,7 @@
+@import './defines.css';
+
 body {
-  background-color: #94e9cd;
+  background-color: var(--background-color);
   font-family: 'Noto Sans Japanese', sans-serif;
 }
 

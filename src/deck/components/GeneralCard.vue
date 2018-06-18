@@ -48,6 +48,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../defines.css';
+
 .general {
   position: relative;
   width: 49px;
@@ -75,7 +77,7 @@ export default {
   position: absolute;
   right: 0;
   bottom: 5px;
-  color: #fff;
+  color: var(--general-name-color);
 }
 
 .general .name .rarity {

@@ -1,0 +1,11 @@
+:root {
+  --background-color: #94e9cd;
+  --board-bg-color: #19c88e;
+  --board-drop-area-bg-color: #0daf79;
+  --board-drop-area-bg-invalid-color: #323534;
+  --board-slot-inner-active-border-color: #fe6011;
+  --general-name-color: #fff;
+  --menu-link-color: #adcec3;
+  --menu-bg-color: #13372b;
+  --menu-active-bg-color: #157656;
+}

@@ -120,8 +120,10 @@ export default {
 </script>
 
 <style scoped>
+@import '../defines.css';
+
 .board {
-  background-color: #19c88e;
+  background-color: var(--board-bg-color);
 }
 
 .deck-info {
@@ -129,14 +131,14 @@ export default {
 }
 
 .deck-drop-area {
-  background-color: #0daf79;
+  background-color: var(--board-drop-area-bg-color);
   white-space: nowrap;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
 .deck-drop-area.invalid {
-  background-color: #323534;
+  background-color: var(--board-drop-area-bg-invalid-color);
 }
 
 .deck-drop-area::-webkit-scrollbar {
@@ -165,7 +167,7 @@ export default {
 
 .slot-inner.active {
   margin: -2px;
-  border: solid 2px #fe6011;
+  border: solid 2px var(--board-slot-inner-active-border-color);
 }
 
 .deck-animation-enter,

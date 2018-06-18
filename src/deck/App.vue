@@ -46,6 +46,8 @@ export default {
 </script>
 
 <style scoped>
+@import './defines.css';
+
 #app {
   position: relative;
   left: 0;
@@ -69,7 +71,7 @@ export default {
   bottom: 0;
   z-index: 1000;
   color: #777;
-  background-color: #13372b;
+  background-color: var(--menu-bg-color);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }

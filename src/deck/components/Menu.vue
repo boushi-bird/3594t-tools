@@ -18,20 +18,22 @@ export default {
 </script>
 
 <style scoped>
+@import '../defines.css';
+
 a.pure-menu-heading {
   font-size: 125%;
-  color: #adcec3;
+  color: var(--menu-link-color);
   cursor: pointer;
 }
 
 a.pure-menu-link {
-  color: #adcec3;
+  color: var(--menu-link-color);
   cursor: pointer;
 }
 
 .pure-menu li a:hover,
 .pure-menu li a:focus {
-  background-color: #157656;
+  background-color: var(--menu-active-bg-color);
 }
 
 /* .container a {
