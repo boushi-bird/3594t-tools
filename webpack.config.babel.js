@@ -1,4 +1,5 @@
 import path from 'path'
+import Dotenv from 'dotenv-webpack'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
@@ -32,6 +33,7 @@ export default {
     ],
   },
   plugins: [
+    new Dotenv(),
     new CleanWebpackPlugin(isProduction ? [
       'dist/scripts',
       'dist/styles',
@@ -45,6 +47,7 @@ export default {
       excludeChunks: ['hub'],
       minify: {
         collapseWhitespace: true,
+        removeComments: true,
       },
     }),
     new HtmlWebpackPlugin({
