@@ -19,7 +19,7 @@ export default class General {
   }
 
   get thumbnail () {
-    return `https://3594t.net/img/card_slim/${this._general.code}.jpg`
+    return `https://3594t.net/img/card_slim_2000/${this._general.code}.png`
   }
 
   get personal () {
