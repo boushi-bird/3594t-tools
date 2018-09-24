@@ -20,17 +20,18 @@ const run = async (document) => {
 
   let text = ''
   text += '[自分]\n'
-  const cardTemplate = (general) => {
-    return `${general.rarity}${general.name}(${general.version} ${general.state})
+  const cardTemplate = ({general, useStrategy}) => {
+    const strategy = useStrategy ? ` (${general.strategy})` : ''
+    return `${general.state} ${general.version} ${general.rarity}${general.name}${strategy}
 `
   }
-  selfDeck.forEach(general => {
-    text += cardTemplate(general)
+  selfDeck.forEach(d => {
+    text += cardTemplate(d)
   })
   text += '\n'
   text += '[相手]\n'
-  opponentDeck.forEach(general => {
-    text += cardTemplate(general)
+  opponentDeck.forEach(d => {
+    text += cardTemplate(d)
   })
   const displayArea = document.createElement('textarea')
   displayArea.style.position = 'absolute'
