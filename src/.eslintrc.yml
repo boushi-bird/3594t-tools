@@ -1,0 +1,17 @@
+env:
+  browser: true
+extends:
+  - ../.eslintrc.yml
+  - plugin:react/recommended
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+rules:
+  react/jsx-uses-vars:
+    - error
+settings:
+  react:
+    version: detect
