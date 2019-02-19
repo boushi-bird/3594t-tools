@@ -1,0 +1,9 @@
+:root {
+  --app-min-width: 630px; /* アプリケーションの最小幅 */
+  --card-filter-min-width: 300px;
+}
+
+@custom-media --app-min screen and (max-width: 630px);
+@custom-media --small-device-w screen and (max-width: 980px);
+@custom-media --small-device-h screen and (max-height: 760px));
+@custom-media --small-device --small-device-w, --small-device-h;

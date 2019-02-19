@@ -1,10 +1,10 @@
 import path from 'path';
-import { Configuration } from 'webpack'; // eslint-disable-line no-unused-vars
+import { Configuration } from 'webpack';
 import Dotenv from 'dotenv-webpack';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 
 const isProduction: boolean = process.env.NODE_ENV === 'production';
@@ -24,7 +24,7 @@ const config: Configuration = {
     extensions: ['.ts', '.tsx', '.js'],
   },
   optimization: {
-    minimizer: [new UglifyJsPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin()],
   },
   plugins: [
     new Dotenv(),
@@ -49,7 +49,7 @@ const config: Configuration = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: ['babel-loader', 'ts-loader'],
       },
       {
         test: /\.css$/,

@@ -1,0 +1,9 @@
+@import '../../defines.css';
+
+.card-list-container {
+  flex: 1;
+  min-width: var(--app-min-width);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

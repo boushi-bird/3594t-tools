@@ -1,7 +1,28 @@
-import * as React from 'react';
+import './App.css';
+import React from 'react';
+import classNames from 'classnames';
+import CardList from './CardList';
+import CardFilter from './CardFilter';
+import { State } from '../module';
+import { ActionDispatcher } from '../container';
 
-export default class App extends React.Component<{}, {}> {
+type Props = {
+  value: State;
+  actions: ActionDispatcher;
+};
+
+export default class App extends React.Component<Props, {}> {
   render() {
-    return <div>hello!</div>;
+    const modal = this.props.value.openFilter;
+    const containerClasses = classNames(['app-container', { modal }]);
+    return (
+      <div className={containerClasses}>
+        <div className="app-main">
+          <CardList />
+          <CardFilter />
+        </div>
+        <div className="modal-background" />
+      </div>
+    );
   }
 }
