@@ -9,7 +9,7 @@ import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 
 const isProduction: boolean = process.env.NODE_ENV === 'production';
 
-const distDir: string = 'dist';
+const distDir = 'dist';
 
 const config: Configuration = {
   mode: isProduction ? 'production' : 'development',
@@ -20,6 +20,7 @@ const config: Configuration = {
     path: path.resolve(__dirname, distDir),
     filename: 'scripts/[name].[chunkhash].js',
   },
+  devtool: isProduction ? false : 'inline-source-map',
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
   },

@@ -12,6 +12,8 @@ globals:
 rules:
   react/jsx-uses-vars:
     - error
+  react/jsx-no-bind:
+    - error
 settings:
   react:
     version: detect

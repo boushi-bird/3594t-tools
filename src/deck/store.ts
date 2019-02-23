@@ -3,8 +3,8 @@ import reducer, { State, Actions } from './module';
 
 export default createStore(combineReducers({ reducer }));
 
-export type ReduxState = {
+export interface ReduxState {
   reducer: State;
-};
+}
 
 export type ReduxAction = Actions | Action;

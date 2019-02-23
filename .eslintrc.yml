@@ -2,6 +2,7 @@ env:
   es6: true
 extends:
   - google
+  - 'plugin:@typescript-eslint/recommended'
   - plugin:prettier/recommended
 parser: '@typescript-eslint/parser'
 parserOptions:
@@ -10,6 +11,7 @@ parserOptions:
   sourceType: module
 plugins:
   - react
+  - babel
   - '@typescript-eslint'
 rules:
   require-jsdoc:
@@ -17,7 +19,12 @@ rules:
   quotes:
     - warn
     - single
-  no-unused-vars:
+  no-invalid-this:
     - off
-  '@typescript-eslint/no-unused-vars':
+  babel/no-invalid-this:
     - error
+  '@typescript-eslint/indent':
+    - error
+    - 2
+  '@typescript-eslint/no-parameter-properties':
+    - off

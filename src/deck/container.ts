@@ -5,13 +5,13 @@ import { open, close } from './module';
 import { ReduxAction, ReduxState } from './store';
 
 export class ActionDispatcher {
-  constructor(private dispatch: (action: ReduxAction) => void) {}
+  public constructor(private dispatch: Dispatch<ReduxAction>) {}
 
-  public open() {
+  public open(): void {
     this.dispatch(open());
   }
 
-  public close() {
+  public close(): void {
     this.dispatch(close());
   }
 }
