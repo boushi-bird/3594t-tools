@@ -1,10 +1,10 @@
-import { createStore, combineReducers, Action } from 'redux';
-import reducer, { State, Actions } from './module';
+import { createStore, combineReducers } from 'redux';
+import windowReducer, { WindowState } from './modules/window';
 
-export default createStore(combineReducers({ reducer }));
+const reducers = { windowReducer };
 
-export interface ReduxState {
-  reducer: State;
+export default createStore(combineReducers(reducers));
+
+export interface Reducers {
+  windowReducer: WindowState;
 }
-
-export type ReduxAction = Actions | Action;

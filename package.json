@@ -2,12 +2,13 @@
   "name": "3594t-tools",
   "version": "1.0.0",
   "description": "",
-  "main": "src/deck/index.ts",
+  "main": "src/deck/index.tsx",
   "scripts": {
     "build": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
     "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack-dev-server",
     "lint": "npm-run-all lint:*",
     "fix": "npm-run-all fix:*",
+    "lint:ts": "tsc --noEmit",
     "lint:es": "eslint --ext .js,.ts,.tsx .",
     "fix:es": "eslint --ext .js,.ts,.tsx --fix .",
     "lint:css": "stylelint .",
@@ -21,7 +22,8 @@
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-redux": "^6.0.1",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "typesafe-actions": "^3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
