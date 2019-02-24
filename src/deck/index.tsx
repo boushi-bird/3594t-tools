@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './containers/AppContainer';
 import store from './store';
+import loadBaseData from './load-base-data';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -11,3 +12,7 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app')
 );
+
+loadBaseData().then(baseData => {
+  console.log(baseData);
+});
