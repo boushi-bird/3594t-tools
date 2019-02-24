@@ -9,16 +9,18 @@ import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 
 const isProduction: boolean = process.env.NODE_ENV === 'production';
 
+const fileName = isProduction ? '[name].[chunkhash]' : '[name]';
+
 const distDir = 'dist';
 
 const config: Configuration = {
   mode: isProduction ? 'production' : 'development',
   entry: {
-    deck: path.resolve(__dirname, 'src/deck/index.ts'),
+    deck: path.resolve(__dirname, 'src/deck/index.tsx'),
   },
   output: {
     path: path.resolve(__dirname, distDir),
-    filename: 'scripts/[name].[chunkhash].js',
+    filename: `scripts/${fileName}.js`,
   },
   devtool: isProduction ? false : 'inline-source-map',
   resolve: {
@@ -28,21 +30,21 @@ const config: Configuration = {
     minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin()],
   },
   plugins: [
-    new Dotenv(),
+    new Dotenv({ systemvars: true, defaults: true }),
     new CleanWebpackPlugin(
       isProduction
         ? [path.join(distDir, 'scripts'), path.join(distDir, 'styles')]
         : []
     ),
     new MiniCssExtractPlugin({
-      filename: 'styles/[name].[chunkhash].css',
+      filename: `styles/[${fileName}.css`,
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/deck/index.html'),
       filename: 'deck/index.html',
       minify: {
-        collapseWhitespace: true,
-        removeComments: true,
+        collapseWhitespace: isProduction,
+        removeComments: isProduction,
       },
     }),
   ],
@@ -60,7 +62,7 @@ const config: Configuration = {
   },
   devServer: {
     host: '0.0.0.0',
-    contentBase: path.resolve(__dirname, distDir),
+    contentBase: path.resolve(__dirname, 'src'),
   },
 };
 
