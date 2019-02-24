@@ -1,10 +1,9 @@
 import { createStore, combineReducers } from 'redux';
-import windowReducer, { WindowState } from './modules/window';
+import { StateType } from 'typesafe-actions';
+import windowReducer from './modules/window';
 
 const reducers = { windowReducer };
 
-export default createStore(combineReducers(reducers));
+export type State = StateType<typeof reducers>;
 
-export interface Reducers {
-  windowReducer: WindowState;
-}
+export default createStore(combineReducers<State>(reducers));

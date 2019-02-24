@@ -37,7 +37,7 @@ const config: Configuration = {
         : []
     ),
     new MiniCssExtractPlugin({
-      filename: `styles/[${fileName}.css`,
+      filename: `styles/${fileName}.css`,
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/deck/index.html'),

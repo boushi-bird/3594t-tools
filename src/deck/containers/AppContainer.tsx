@@ -3,10 +3,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import classNames from 'classnames';
-import { actions, WindowActions, WindowState } from '../modules/window';
-import { Reducers } from '../store';
+import { windowActions, WindowState } from '../modules/window';
+import loadBaseData from '../load-base-data';
+import { State } from '../store';
 import CardList from '../components/CardList';
-import CardFilter from '../components/CardFilter';
+import CardFilterContainer from './CardFilterContainer';
 
 interface Props {
   openFilter(): void;
@@ -14,6 +15,12 @@ interface Props {
 }
 
 class App extends React.Component<Props & WindowState> {
+  public async componentDidMount(): Promise<void> {
+    const baseData = await loadBaseData();
+    // TODO 読み込んだデータを使う
+    console.log(baseData);
+  }
+
   public render(): JSX.Element {
     const modal = this.props.openedAnyModal;
     const containerClasses = classNames(['app-container', { modal }]);
@@ -21,7 +28,7 @@ class App extends React.Component<Props & WindowState> {
       <div className={containerClasses}>
         <div className="app-main">
           <CardList onClick={this.props.openFilter} />
-          <CardFilter open={modal} />
+          <CardFilterContainer />
         </div>
         <div className="modal-background" onClick={this.props.closeAllModal} />
       </div>
@@ -30,8 +37,8 @@ class App extends React.Component<Props & WindowState> {
 }
 
 export default connect(
-  (state: Reducers) => ({ ...state.windowReducer }),
-  (dispatch: Dispatch<WindowActions>) => ({
-    ...bindActionCreators(actions, dispatch),
+  (state: State) => ({ ...state.windowReducer }),
+  (dispatch: Dispatch) => ({
+    ...bindActionCreators(windowActions, dispatch),
   })
 )(App);

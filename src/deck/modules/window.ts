@@ -9,7 +9,7 @@ const OPEN_FILTER = 'OPEN_FILTER';
 const CLOSE_FILTER = 'CLOSE_FILTER';
 const CLOSE_ALL_MODAL = 'CLOSE_ALL_MODAL';
 
-export const actions = {
+export const windowActions = {
   openFilter: createAction(OPEN_FILTER, action => () =>
     action({ openedFilter: true })
   ),
@@ -19,8 +19,6 @@ export const actions = {
   closeAllModal: createAction(CLOSE_ALL_MODAL),
 };
 
-export type WindowActions = ActionType<typeof actions>;
-
 const initialState: WindowState = {
   openedFilter: false,
   openedAnyModal: false,
@@ -28,7 +26,7 @@ const initialState: WindowState = {
 
 export default function windowReducer(
   state: WindowState = initialState,
-  actions: WindowActions
+  actions: ActionType<typeof windowActions>
 ): WindowState {
   let openedFilter: boolean;
   switch (actions.type) {
