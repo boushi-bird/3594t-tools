@@ -1,47 +1,68 @@
 import { ActionType, createAction } from 'typesafe-actions';
 
+export const filterTabNames = {
+  BASIC: '基本',
+  DETAIL: '詳細',
+};
+
+export type FilterTab = keyof typeof filterTabNames;
+
 export interface WindowState {
   openedFilter: boolean;
   openedAnyModal: boolean;
+  activeFilter: FilterTab;
 }
 
-const OPEN_FILTER = 'OPEN_FILTER';
-const CLOSE_FILTER = 'CLOSE_FILTER';
-const CLOSE_ALL_MODAL = 'CLOSE_ALL_MODAL';
-
 export const windowActions = {
-  openFilter: createAction(OPEN_FILTER, action => () =>
+  openFilter: createAction('CHANGE_FILTER_VISIBLE', action => () =>
     action({ openedFilter: true })
   ),
-  closeFilter: createAction(CLOSE_FILTER, action => () =>
+  closeFilter: createAction('CHANGE_FILTER_VISIBLE', action => () =>
     action({ openedFilter: false })
   ),
-  closeAllModal: createAction(CLOSE_ALL_MODAL),
+  closeAllModal: createAction('CLOSE_ALL_MODAL'),
+  changeActiveFilterTab: createAction(
+    'CHANGE_ACTIVE_FILTER',
+    action => (activeFilter: FilterTab) => action({ activeFilter })
+  ),
 };
 
 const initialState: WindowState = {
   openedFilter: false,
   openedAnyModal: false,
+  activeFilter: 'BASIC',
 };
 
 export default function windowReducer(
   state: WindowState = initialState,
   actions: ActionType<typeof windowActions>
 ): WindowState {
-  let openedFilter: boolean;
   switch (actions.type) {
-    case OPEN_FILTER:
-    case CLOSE_FILTER:
-      openedFilter = actions.payload.openedFilter;
-      break;
-    case CLOSE_ALL_MODAL:
-      openedFilter = false;
-      break;
+    case 'CHANGE_FILTER_VISIBLE':
+      const {
+        payload: { openedFilter },
+      } = actions;
+      const openedAnyModal = openedFilter;
+      return {
+        ...state,
+        openedFilter,
+        openedAnyModal,
+      };
+    case 'CLOSE_ALL_MODAL':
+      return {
+        ...state,
+        openedFilter: false,
+        openedAnyModal: false,
+      };
+    case 'CHANGE_ACTIVE_FILTER':
+      const {
+        payload: { activeFilter },
+      } = actions;
+      return {
+        ...state,
+        activeFilter,
+      };
     default:
       return state;
   }
-  return {
-    openedFilter,
-    openedAnyModal: openedFilter,
-  };
 }
