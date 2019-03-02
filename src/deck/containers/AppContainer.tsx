@@ -21,7 +21,7 @@ class App extends React.Component<Props & WindowState> {
     console.log(baseData);
   }
 
-  public render(): JSX.Element {
+  public render(): React.ReactNode {
     const modal = this.props.openedAnyModal;
     const containerClasses = classNames(['app-container', { modal }]);
     return (

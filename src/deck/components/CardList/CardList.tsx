@@ -6,7 +6,7 @@ interface Props {
 }
 
 export default class CardList extends React.Component<Props> {
-  public render(): JSX.Element {
+  public render(): React.ReactNode {
     return (
       <div className="card-list-container">
         card-list-container

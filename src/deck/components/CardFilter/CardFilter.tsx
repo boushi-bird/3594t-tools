@@ -56,7 +56,7 @@ export default class CardFilter extends React.Component<Props, State> {
     return () => <div className="card-filter-tabs">{buttons}</div>;
   }
 
-  public render(): JSX.Element {
+  public render(): React.ReactNode {
     const { open } = this.props;
     const containerClasses = classNames(['card-filter-container', { open }]);
     const Tabs = this.renderTabs();

@@ -6,20 +6,20 @@ import { State } from '../store';
 import CardFilter from '../components/CardFilter';
 
 interface Props {
-  openedAnyModal: boolean;
-  closeFilter(): void;
+  open: boolean;
+  handleOnClose(): void;
 }
 
 export class CardFilterContainer extends React.Component<Props> {
-  public render(): JSX.Element {
-    const open = this.props.openedAnyModal;
-    return <CardFilter open={open} onClose={this.props.closeFilter} />;
+  public render(): React.ReactNode {
+    const { open } = this.props;
+    return <CardFilter open={open} onClose={this.props.handleOnClose} />;
   }
 }
 
 export default connect(
-  ({ windowReducer: { openedAnyModal } }: State) => ({ openedAnyModal }),
+  ({ windowReducer: { openedAnyModal: open } }: State) => ({ open }),
   (dispatch: Dispatch) => ({
-    closeFilter: () => dispatch(windowActions.closeFilter()),
+    handleOnClose: () => dispatch(windowActions.closeFilter()),
   })
 )(CardFilterContainer);
