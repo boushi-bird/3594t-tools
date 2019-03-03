@@ -1,7 +1,7 @@
 import './BaseFilter.css';
 import React from 'react';
-import classNames from 'classnames';
 import { FilterCondition, FilterContents } from '../../modules/datalist';
+import FilterButtonList from '../../components/FilterButtonList';
 
 export interface PropValue {
   filterCondition: FilterCondition;
@@ -16,51 +16,29 @@ export interface PropActions {
 type Props = PropValue & PropActions;
 
 export default class BaseFilter extends React.Component<Props> {
-  private handleChangeCondition = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    const name = event.currentTarget.dataset['name'];
-    const value = event.currentTarget.dataset['value'];
-    if (name != null && value != null) {
-      this.props.toggleCheck(name as keyof FilterCondition, value);
-    }
-  };
-
   public render(): React.ReactNode {
-    const { filterContents, filterCondition } = this.props;
-    const { belongStates } = filterContents;
-    const stateButtons: JSX.Element[] = [];
-    Object.entries(belongStates).forEach(([key, value]) => {
-      const label = value.shortName || value.name;
-      const style: React.CSSProperties = {};
-      if (value.color) {
-        style.backgroundColor = value.color;
-      }
-      const checked = filterCondition.belongStates.includes(key);
-      stateButtons.push(
-        <button
-          key={key}
-          data-name="belongStates"
-          data-value={key}
-          style={style}
-          className={classNames([
-            'button',
-            'filter-item',
-            'square',
-            'state',
-            { checked },
-          ])}
-          onClick={this.handleChangeCondition}
-        >
-          {label}
-        </button>
-      );
-    });
+    const { filterContents, filterCondition, toggleCheck } = this.props;
     return (
       <div>
         <section className="filter-section">
           <h2 className="title">勢力</h2>
-          <div className="button-list">{stateButtons}</div>
+          <FilterButtonList
+            itemName="belongStates"
+            items={filterContents.belongStates}
+            checkedItems={filterCondition.belongStates}
+            onClickItem={toggleCheck}
+            square={true}
+          />
+        </section>
+        <section className="filter-section">
+          <h2 className="title">コスト</h2>
+          <FilterButtonList
+            itemName="costs"
+            items={filterContents.costs}
+            checkedItems={filterCondition.costs}
+            onClickItem={toggleCheck}
+            square={true}
+          />
         </section>
       </div>
     );

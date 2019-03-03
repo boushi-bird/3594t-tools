@@ -8,28 +8,32 @@ interface FilterItem {
   color?: string;
 }
 
-interface FilterItems {
-  [key: string]: FilterItem;
-}
-
-export interface FilterContents {
-  belongStates: FilterItems;
-}
-
-interface ArrayFilterCondition {
+const initialFilterCondition: {
   belongStates: string[];
-}
-
-interface SimpleFilterCondition {
+  costs: string[];
   searchText: string;
-}
+} = {
+  belongStates: [],
+  costs: [],
+  searchText: '',
+};
 
-export type FilterCondition = SimpleFilterCondition & ArrayFilterCondition;
+const initialFilterContents: {
+  belongStates: { [key: string]: FilterItem };
+  costs: { [key: string]: FilterItem };
+} = {
+  belongStates: {},
+  costs: {},
+};
 
-export interface DatalistState {
-  filterCondition: FilterCondition;
-  filterContents: FilterContents;
-}
+const initialState = {
+  filterCondition: initialFilterCondition,
+  filterContents: initialFilterContents,
+};
+
+export type FilterCondition = typeof initialFilterCondition;
+export type FilterContents = typeof initialFilterContents;
+export type DatalistState = typeof initialState;
 
 export const datalistActions = {
   resetConditions: createAction('RESET_CONDITIONS'),
@@ -47,23 +51,14 @@ export const datalistActions = {
   ),
 };
 
-const initialFilterCondition = {
-  belongStates: [],
-  searchText: '',
-};
-
-const initialState: DatalistState = {
-  filterCondition: initialFilterCondition,
-  filterContents: {
-    belongStates: {},
-  },
-};
-
 const arrayToObject = <T, V>(
   array: T[],
   func: (t: T) => V
 ): { [key: string]: V } =>
   Object.assign({}, ...array.map((v, i) => ({ [`${i}`]: func(v) })));
+
+const convertStringKey = <V>(obj: { [key: number]: V }): { [key: string]: V } =>
+  Object.assign({}, ...Object.entries(obj).map(([k, v]) => ({ [k]: v })));
 
 export default function datalistReducer(
   state: DatalistState = initialState,
@@ -119,6 +114,7 @@ export default function datalistReducer(
           shortName: s['name_short'],
           color: `rgb(${s.red}, ${s.green}, ${s.blue})`,
         })),
+        costs: convertStringKey(baseData.COST),
       };
       return {
         ...state,
