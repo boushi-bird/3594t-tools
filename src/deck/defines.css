@@ -2,6 +2,7 @@
   --app-min-width: 630px; /* アプリケーションの最小幅 */
   --card-filter-min-width: 300px;
   --card-filter-bg-color: rgba(0, 0, 0, 0.8);
+  --card-filter-content-bg-color: rgba(41, 16, 16, 1);
   --card-filter-label-color: #fccd4d;
 }
 

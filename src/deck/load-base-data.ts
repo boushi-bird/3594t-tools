@@ -92,7 +92,7 @@ interface VerType {
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-interface BaseData {
+export interface BaseData {
   ACTIVE_JEWEL: any[];
   ACTIVE_JEWEL_TYPE: any[];
   BGM: any[];

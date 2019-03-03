@@ -1,13 +1,15 @@
 import './App.css';
 import React from 'react';
 import classNames from 'classnames';
-import loadBaseData from '../../load-base-data';
 import { WindowState, filterTabNames, FilterTab } from '../../modules/window';
 import CardList from '../../components/CardList';
-import FilterTabs from '../../components/FilterTabs/FilterTabs';
+import FilterTabs from '../../components/FilterTabs';
+import FilterActions from '../../components/FilterActions';
+import BaseFilter from '../../containers/BaseFilter';
 
 export interface Props {
   resetConditions(): void;
+  fetchBaseData(): void;
   openFilter(): void;
   closeFilter(): void;
   closeAllModal(): void;
@@ -15,11 +17,8 @@ export interface Props {
 }
 
 export default class App extends React.PureComponent<Props & WindowState> {
-  public async componentDidMount(): Promise<void> {
-    // TODO moduleから呼ぶ
-    const baseData = await loadBaseData();
-    // TODO 読み込んだデータを使う
-    console.log(baseData);
+  public componentDidMount(): void {
+    this.props.fetchBaseData();
   }
 
   public render(): React.ReactNode {
@@ -33,13 +32,11 @@ export default class App extends React.PureComponent<Props & WindowState> {
       openedAnyModal: modal,
       activeFilter,
     } = this.props;
-    const containerClasses = classNames(['app-container', { modal }]);
-    const cardFilterClasses = classNames(['card-filter-container', { open }]);
     return (
-      <div className={containerClasses}>
+      <div className={classNames(['app-container', { modal }])}>
         <div className="app-main">
           <CardList onClick={openFilter} />
-          <div className={cardFilterClasses}>
+          <div className={classNames(['card-filter-container', { open }])}>
             <h1 className="card-filter-title">絞り込みメニュー</h1>
             <div className="card-filter-buttons">
               <FilterTabs
@@ -47,17 +44,26 @@ export default class App extends React.PureComponent<Props & WindowState> {
                 activeTab={activeFilter}
                 onTabChanged={changeActiveFilterTab}
               />
-              <div className="card-filter-actions">
-                <button
-                  className="action-buton-reset"
-                  onClick={resetConditions}
-                >
-                  リセット
-                </button>
-                <button className="action-buton-ok" onClick={closeFilter}>
-                  OK
-                </button>
-              </div>
+              <FilterActions
+                resetConditions={resetConditions}
+                closeFilter={closeFilter}
+              />
+            </div>
+            <div
+              className={classNames([
+                'card-filter-content',
+                { active: activeFilter === 'BASIC' },
+              ])}
+            >
+              <BaseFilter />
+            </div>
+            <div
+              className={classNames([
+                'card-filter-content',
+                { active: activeFilter === 'DETAIL' },
+              ])}
+            >
+              detail
             </div>
           </div>
         </div>

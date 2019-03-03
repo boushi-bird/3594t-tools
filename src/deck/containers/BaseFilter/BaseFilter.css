@@ -1,0 +1,56 @@
+@import '../../defines.css';
+
+.filter-section {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.filter-section .title {
+  font-size: 24px;
+  font-weight: lighter;
+  padding-left: 10px;
+  color: var(--card-filter-label-color);
+  text-shadow: 0 0 5px var(--card-filter-label-color);
+  border-bottom: solid 3px var(--card-filter-label-color);
+  margin: 15px auto 10px;
+}
+
+.filter-section .title-inline {
+  font-size: 18px;
+  font-weight: lighter;
+  vertical-align: middle;
+  color: var(--card-filter-label-color);
+  text-shadow: 0 0 5px var(--card-filter-label-color);
+  margin: 5px;
+}
+
+.button.filter-item {
+  width: 120px;
+  height: 60px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #fff;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 3px;
+  border-radius: 6px;
+  text-shadow: 0 0 10px lightslategray;
+  background-color: #d2b48c;
+  outline: none;
+  margin: 3px;
+}
+
+.button.filter-item.square {
+  font-size: 28px;
+  width: 60px;
+}
+
+.button.filter-item.checked {
+  text-shadow: 0 0 30px #ff8c00;
+  border-color: #ff8c00;
+}
+
+.button.filter-item:disabled {
+  color: #ccc;
+  border-color: #ccc;
+}

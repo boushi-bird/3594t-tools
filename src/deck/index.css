@@ -22,7 +22,8 @@ td {
   box-sizing: border-box;
 }
 
-button {
+button,
+.button {
   margin: 0;
   padding: 0;
   cursor: pointer;
@@ -44,4 +45,11 @@ body {
 
 .home {
   height: 100%;
+}
+
+.button-list {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-wrap: wrap;
 }

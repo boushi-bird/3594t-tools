@@ -55,38 +55,15 @@
   border-bottom: solid 3px var(--card-filter-label-color);
 }
 
-.card-filter-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.card-filter-actions [class^="action-buton-"] {
-  margin: 3px;
-  font-size: 18px;
-  width: 88px;
-  height: 40px;
-  font-weight: bold;
-  color: white;
-  border-style: solid;
-  border-color: var(--card-filter-label-color);
-  border-width: 2px;
-  border-radius: 6px;
-  outline: none;
-}
-
-.card-filter-actions .action-buton-reset {
-  background-color: blue;
-}
-
-.card-filter-actions .action-buton-ok {
+.card-filter-content {
+  height: calc(100% - 130px);
+  background-color: var(--card-filter-content-bg-color);
   display: none;
-  background-color: red;
+  overflow: auto;
 }
 
-@media (--small-device) {
-  .modal .card-filter-actions .action-buton-ok {
-    display: block;
-  }
+.card-filter-content.active {
+  display: block;
 }
 
 @media (--small-device) {
