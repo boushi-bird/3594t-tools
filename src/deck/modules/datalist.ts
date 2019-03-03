@@ -1,7 +1,7 @@
 import { ActionType, createAction } from 'typesafe-actions';
 import { BaseData } from '../load-base-data';
 
-interface FilterItem {
+export interface FilterItem {
   code: string;
   name: string;
   shortName?: string;
@@ -105,8 +105,6 @@ export default function datalistReducer(
       }
     case 'SET_BASE_DATA':
       const baseData = actions.payload.baseData;
-      // TODO
-      console.log(baseData);
       const filterContents: FilterContents = {
         belongStates: arrayToObject(baseData.STATE, s => ({
           code: s.code,

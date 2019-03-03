@@ -2,9 +2,9 @@ import './App.css';
 import React from 'react';
 import classNames from 'classnames';
 import { WindowState, filterTabNames, FilterTab } from '../../modules/window';
-import CardList from '../../components/CardList';
 import FilterTabs from '../../components/FilterTabs';
 import FilterActions from '../../components/FilterActions';
+import SimpleFilter from '../../containers/SimpleFilter';
 import BaseFilter from '../../containers/BaseFilter';
 
 export interface Props {
@@ -35,7 +35,14 @@ export default class App extends React.PureComponent<Props & WindowState> {
     return (
       <div className={classNames(['app-container', { modal }])}>
         <div className="app-main">
-          <CardList onClick={openFilter} />
+          <div className="card-list-container">
+            <div className="simple-filter-container">
+              <SimpleFilter />
+              <button className="open-filter" onClick={openFilter}>
+                絞込
+              </button>
+            </div>
+          </div>
           <div className={classNames(['card-filter-container', { open }])}>
             <h1 className="card-filter-title">絞り込みメニュー</h1>
             <div className="card-filter-buttons">

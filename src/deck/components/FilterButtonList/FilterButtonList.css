@@ -3,8 +3,12 @@
 .button-list {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   flex-wrap: wrap;
+}
+
+.simple-filter-state .button-list {
+  flex-wrap: nowrap;
 }
 
 .button.filter-item {
