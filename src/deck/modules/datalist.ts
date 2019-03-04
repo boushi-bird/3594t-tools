@@ -4,7 +4,7 @@ import { BaseData } from '../api/load-data';
 export interface FilterItem {
   code: string;
   name: string;
-  shortName?: string;
+  nameShort?: string;
   color?: string;
 }
 

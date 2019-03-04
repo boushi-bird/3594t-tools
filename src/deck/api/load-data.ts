@@ -8,7 +8,7 @@ export type RawBaseData = RawBaseData;
 interface Item {
   code: string;
   name: string;
-  shortName?: string;
+  nameShort?: string;
   color?: string;
 }
 
@@ -49,7 +49,7 @@ export default async (): Promise<BaseData> => {
       ({ code, name, ...s }) => ({
         code,
         name,
-        shortName: s['name_short'],
+        nameShort: s['name_short'],
         color: `rgb(${s.red}, ${s.green}, ${s.blue})`,
       })
     ),
@@ -60,7 +60,7 @@ export default async (): Promise<BaseData> => {
       ({ code, name }) => ({
         code,
         name,
-        shortName: name[0],
+        nameShort: name[0],
       })
     ),
     generals: arrayToObject(baseData.GENERAL, indexKey, raw => ({ raw })),

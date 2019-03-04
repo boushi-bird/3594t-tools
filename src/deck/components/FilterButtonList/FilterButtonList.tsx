@@ -7,7 +7,7 @@ type FilterConditionKey = keyof FilterCondition;
 
 interface ButtonItem {
   name: string;
-  shortName?: string;
+  nameShort?: string;
   color?: string;
 }
 
@@ -45,7 +45,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
     const square = this.square;
     const buttons: JSX.Element[] = [];
     Object.entries(items).forEach(([itemValue, item]) => {
-      const label = square ? item.shortName || item.name : item.name;
+      const label = square ? item.nameShort || item.name : item.name;
       const style: React.CSSProperties = {};
       if (item.color) {
         style.backgroundColor = item.color;
