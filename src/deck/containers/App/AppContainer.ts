@@ -4,7 +4,7 @@ import { WindowState, windowActions } from '../../modules/window';
 import { datalistActions } from '../../modules/datalist';
 import { State } from '../../store';
 import App, { Props } from './App';
-import loadBaseData from '../../load-base-data';
+import loadData from '../../api/load-data';
 
 export default connect(
   (state: State): WindowState => state.windowReducer,
@@ -14,7 +14,7 @@ export default connect(
       dispatch
     ),
     fetchBaseData: async (): Promise<void> => {
-      const baseData = await loadBaseData();
+      const baseData = await loadData();
       dispatch(datalistActions.setBaseData(baseData));
     },
     ...bindActionCreators(windowActions, dispatch),

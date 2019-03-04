@@ -1,5 +1,5 @@
 import { ActionType, createAction } from 'typesafe-actions';
-import { BaseData } from '../load-base-data';
+import { BaseData } from '../api/load-data';
 
 export interface FilterItem {
   code: string;
@@ -11,19 +11,23 @@ export interface FilterItem {
 const initialFilterCondition: {
   belongStates: string[];
   costs: string[];
+  unitTypes: string[];
   searchText: string;
 } = {
   belongStates: [],
   costs: [],
+  unitTypes: [],
   searchText: '',
 };
 
 const initialFilterContents: {
   belongStates: { [key: string]: FilterItem };
   costs: { [key: string]: FilterItem };
+  unitTypes: { [key: string]: FilterItem };
 } = {
   belongStates: {},
   costs: {},
+  unitTypes: {},
 };
 
 const initialState = {
@@ -50,15 +54,6 @@ export const datalistActions = {
     action({ baseData })
   ),
 };
-
-const arrayToObject = <T, V>(
-  array: T[],
-  func: (t: T) => V
-): { [key: string]: V } =>
-  Object.assign({}, ...array.map((v, i) => ({ [`${i}`]: func(v) })));
-
-const convertStringKey = <V>(obj: { [key: number]: V }): { [key: string]: V } =>
-  Object.assign({}, ...Object.entries(obj).map(([k, v]) => ({ [k]: v })));
 
 export default function datalistReducer(
   state: DatalistState = initialState,
@@ -106,13 +101,7 @@ export default function datalistReducer(
     case 'SET_BASE_DATA':
       const baseData = actions.payload.baseData;
       const filterContents: FilterContents = {
-        belongStates: arrayToObject(baseData.STATE, s => ({
-          code: s.code,
-          name: s.name,
-          shortName: s['name_short'],
-          color: `rgb(${s.red}, ${s.green}, ${s.blue})`,
-        })),
-        costs: convertStringKey(baseData.COST),
+        ...baseData,
       };
       return {
         ...state,

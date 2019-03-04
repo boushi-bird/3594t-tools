@@ -40,6 +40,16 @@ export default class BaseFilter extends React.Component<Props> {
             square={true}
           />
         </section>
+        <section className="filter-section">
+          <h2 className="title">兵種</h2>
+          <FilterButtonList
+            itemName="unitTypes"
+            items={filterContents.unitTypes}
+            checkedItems={filterCondition.unitTypes}
+            onClickItem={toggleCheck}
+            square={true}
+          />
+        </section>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-interface General {
+export interface General {
   add_version: string;
   belong: number;
   buryoku: string;
@@ -123,9 +123,3 @@ export interface BaseData {
   VOICE_ACTOR: any[];
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
-
-export default async (): Promise<BaseData> => {
-  const res: Response = await fetch(process.env.BASE_DATA_URL as string);
-  const baseData = await res.json();
-  return baseData;
-};
