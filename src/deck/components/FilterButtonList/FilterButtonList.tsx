@@ -6,6 +6,7 @@ import { FilterCondition } from '../../modules/datalist';
 type FilterConditionKey = keyof FilterCondition;
 
 interface ButtonItem {
+  id: string;
   name: string;
   nameShort?: string;
   color?: string;
@@ -13,7 +14,7 @@ interface ButtonItem {
 
 interface Props {
   itemName: FilterConditionKey;
-  items: { [itemValue: string]: ButtonItem };
+  items: ButtonItem[];
   checkedItems: string[];
   onClickItem: (itemName: FilterConditionKey, itemValue: string) => void;
   square?: boolean;
@@ -44,17 +45,18 @@ export default class BaseFilter extends React.PureComponent<Props> {
     const { checkedItems, items } = this.props;
     const square = this.square;
     const buttons: JSX.Element[] = [];
-    Object.entries(items).forEach(([itemValue, item]) => {
+    items.forEach(item => {
+      const value = item.id;
       const label = square ? item.nameShort || item.name : item.name;
       const style: React.CSSProperties = {};
       if (item.color) {
         style.backgroundColor = item.color;
       }
-      const checked = checkedItems.includes(itemValue);
+      const checked = checkedItems.includes(value);
       buttons.push(
         <button
-          key={itemValue}
-          value={itemValue}
+          key={value}
+          value={value}
           style={style}
           className={classNames(this.buttonClasses, { checked, square })}
           onClick={this.handleClickItem}

@@ -5,7 +5,7 @@ import FilterButtonList from '../../components/FilterButtonList';
 
 export interface PropValue {
   filterCondition: string[];
-  filterContents: { [key: string]: FilterItem };
+  filterContents: FilterItem[];
 }
 
 export interface PropActions {

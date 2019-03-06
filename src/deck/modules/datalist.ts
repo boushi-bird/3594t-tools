@@ -2,6 +2,7 @@ import { ActionType, createAction } from 'typesafe-actions';
 import { BaseData } from '../api/load-data';
 
 export interface FilterItem {
+  id: string;
   code: string;
   name: string;
   nameShort?: string;
@@ -21,13 +22,13 @@ const initialFilterCondition: {
 };
 
 const initialFilterContents: {
-  belongStates: { [key: string]: FilterItem };
-  costs: { [key: string]: FilterItem };
-  unitTypes: { [key: string]: FilterItem };
+  belongStates: FilterItem[];
+  costs: FilterItem[];
+  unitTypes: FilterItem[];
 } = {
-  belongStates: {},
-  costs: {},
-  unitTypes: {},
+  belongStates: [],
+  costs: [],
+  unitTypes: [],
 };
 
 const initialState = {

@@ -1,125 +1,129 @@
 export interface General {
-  add_version: string;
-  belong: number;
-  buryoku: string;
-  chiryoku: string;
-  code: string;
-  cost: string;
-  ex_rank: string;
-  gen_main0: string;
-  gen_main1: string;
-  gen_main2: string;
-  general_type: string;
-  illustrator: string;
-  major_version: string;
-  not_belong: boolean;
-  personal: string;
-  pocket_code: string;
-  rarity: string;
-  seiatsu: string;
-  skill0: string;
-  skill1: string;
-  skill2: string;
-  state: string;
-  strat: string;
-  unit_type: string;
-  ver_type: string;
-  voice_actor: string;
+  readonly add_version: string;
+  readonly belong: number;
+  readonly buryoku: string;
+  readonly chiryoku: string;
+  readonly code: string;
+  readonly cost: string;
+  readonly ex_rank: string;
+  readonly gen_main0: string;
+  readonly gen_main1: string;
+  readonly gen_main2: string;
+  readonly general_type: string;
+  readonly illustrator: string;
+  readonly major_version: string;
+  readonly not_belong: boolean;
+  readonly personal: string;
+  readonly pocket_code: string;
+  readonly rarity: string;
+  readonly seiatsu: string;
+  readonly skill0: string;
+  readonly skill1: string;
+  readonly skill2: string;
+  readonly state: string;
+  readonly strat: string;
+  readonly unit_type: string;
+  readonly ver_type: string;
+  readonly voice_actor: string;
 }
 
 interface GeneralType {
-  code: string;
-  key: string;
-  name: string;
+  readonly code: string;
+  readonly key: string;
+  readonly name: string;
 }
 
 interface GenMain {
-  code: string;
-  key: string;
-  name: string;
-  name_short: string;
+  readonly code: string;
+  readonly key: string;
+  readonly name: string;
+  readonly name_short: string;
 }
 
 interface GenSub {
-  code: string;
-  name: string;
-  name_short: string;
+  readonly code: string;
+  readonly name: string;
+  readonly name_short: string;
 }
 
-interface Personal {
-  azana: string;
-  azana_ruby: string;
-  name: string;
-  name_ruby: string;
+export interface Personal {
+  readonly azana: string;
+  readonly azana_ruby: string;
+  readonly name: string;
+  readonly name_ruby: string;
 }
 
 interface Skill {
-  code: string;
-  key: string;
-  name: string;
-  name_short: string;
+  readonly code: string;
+  readonly key: string;
+  readonly name: string;
+  readonly name_short: string;
 }
 
 interface State {
-  blue: string;
-  code: string;
-  green: string;
-  name: string;
-  name_short: string;
-  red: string;
+  readonly blue: string;
+  readonly code: string;
+  readonly green: string;
+  readonly name: string;
+  readonly name_short: string;
+  readonly red: string;
 }
 
 interface Strat {
-  code: string;
-  explanation: string;
-  key: string;
-  morale: string;
-  name: string;
-  name_ruby: string;
-  strat_category: string;
-  strat_range: string;
-  strat_time: string;
+  readonly code: string;
+  readonly explanation: string;
+  readonly key: string;
+  readonly morale: string;
+  readonly name: string;
+  readonly name_ruby: string;
+  readonly strat_category: string;
+  readonly strat_range: string;
+  readonly strat_time: string;
 }
 
 interface UnitType {
-  code: string;
-  key: string;
-  name: string;
+  readonly code: string;
+  readonly key: string;
+  readonly name: string;
 }
 
 interface VerType {
-  name: string;
+  readonly name: string;
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BaseData {
-  ACTIVE_JEWEL: any[];
-  ACTIVE_JEWEL_TYPE: any[];
-  BGM: any[];
-  COST: { [key: number]: { code: string; name: string } };
-  DATA: { code: string }[];
-  ENISHI: any[];
-  EXT: any[];
-  EX_RANK: any[];
-  GENERAL: General[];
-  GENERAL_TYPE: GeneralType[];
-  GEN_MAIN: GenMain[];
-  GEN_SUB: GenSub[];
-  ILLUSTRATOR: any[];
-  PARAM: any[];
-  PASSIVE_JEWEL: any[];
-  PATH: any[];
-  PERSONAL: Personal[];
-  RARITY: { [key: string]: { code: string; name: string } };
-  SKILL: Skill[];
-  STATE: State[];
-  STRAT: Strat[];
-  STRAT_CATEGORY: any[];
-  STRAT_RANGE: any[];
-  STRAT_TIME: any[];
-  TACTICS: any[];
-  UNIT_TYPE: UnitType[];
-  VER_TYPE: VerType[];
-  VOICE_ACTOR: any[];
+  readonly ACTIVE_JEWEL: ReadonlyArray<any>;
+  readonly ACTIVE_JEWEL_TYPE: ReadonlyArray<any>;
+  readonly BGM: ReadonlyArray<any>;
+  readonly COST: {
+    readonly [key: number]: { readonly code: string; readonly name: string };
+  };
+  readonly DATA: ReadonlyArray<{ code: string }>;
+  readonly ENISHI: ReadonlyArray<any>;
+  readonly EXT: ReadonlyArray<any>;
+  readonly EX_RANK: ReadonlyArray<any>;
+  readonly GENERAL: ReadonlyArray<General>;
+  readonly GENERAL_TYPE: ReadonlyArray<GeneralType>;
+  readonly GEN_MAIN: ReadonlyArray<GenMain>;
+  readonly GEN_SUB: ReadonlyArray<GenSub>;
+  readonly ILLUSTRATOR: ReadonlyArray<any>;
+  readonly PARAM: ReadonlyArray<any>;
+  readonly PASSIVE_JEWEL: ReadonlyArray<any>;
+  readonly PATH: ReadonlyArray<any>;
+  readonly PERSONAL: ReadonlyArray<Personal>;
+  readonly RARITY: {
+    readonly [key: string]: { readonly code: string; readonly name: string };
+  };
+  readonly SKILL: ReadonlyArray<Skill>;
+  readonly STATE: ReadonlyArray<State>;
+  readonly STRAT: ReadonlyArray<Strat>;
+  readonly STRAT_CATEGORY: ReadonlyArray<any>;
+  readonly STRAT_RANGE: ReadonlyArray<any>;
+  readonly STRAT_TIME: ReadonlyArray<any>;
+  readonly TACTICS: ReadonlyArray<any>;
+  readonly UNIT_TYPE: ReadonlyArray<UnitType>;
+  readonly VER_TYPE: ReadonlyArray<VerType>;
+  readonly VOICE_ACTOR: ReadonlyArray<any>;
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
