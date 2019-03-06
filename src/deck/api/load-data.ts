@@ -40,7 +40,6 @@ export interface General extends IdItem, GeneralProps {
   readonly code: string;
 }
 
-// TODO: 内部で使う export外す
 class GeneralImpl implements General {
   public readonly id: string;
   private readonly raw: RawGeneral;
