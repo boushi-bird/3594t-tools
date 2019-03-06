@@ -9,14 +9,16 @@ import loadData from '../../api/load-data';
 export default connect(
   (state: State): WindowState => state.windowReducer,
   (dispatch: Dispatch): Props => ({
-    resetConditions: bindActionCreators(
-      datalistActions.resetConditions,
-      dispatch
-    ),
     fetchBaseData: async (): Promise<void> => {
       const baseData = await loadData();
       dispatch(datalistActions.setBaseData(baseData));
     },
-    ...bindActionCreators(windowActions, dispatch),
+    ...bindActionCreators(
+      {
+        resetConditions: datalistActions.resetConditions,
+        ...windowActions,
+      },
+      dispatch
+    ),
   })
 )(App);

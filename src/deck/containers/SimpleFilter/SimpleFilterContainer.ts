@@ -9,7 +9,11 @@ export default connect(
     filterCondition: state.datalistReducer.filterCondition.belongStates,
     filterContents: state.datalistReducer.filterContents.belongStates,
   }),
-  (dispatch: Dispatch): PropActions => ({
-    toggleCheck: bindActionCreators(datalistActions.toggleCheck, dispatch),
-  })
+  (dispatch: Dispatch): PropActions =>
+    bindActionCreators(
+      {
+        toggleCheck: datalistActions.toggleCheck,
+      },
+      dispatch
+    )
 )(SimpleFilter);

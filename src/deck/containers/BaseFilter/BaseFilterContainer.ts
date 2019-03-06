@@ -6,8 +6,12 @@ import BaseFilter, { PropValue, PropActions } from './BaseFilter';
 
 export default connect(
   (state: State): PropValue => state.datalistReducer,
-  (dispatch: Dispatch): PropActions => ({
-    setCondition: bindActionCreators(datalistActions.setCondition, dispatch),
-    toggleCheck: bindActionCreators(datalistActions.toggleCheck, dispatch),
-  })
+  (dispatch: Dispatch): PropActions =>
+    bindActionCreators(
+      {
+        setCondition: datalistActions.setCondition,
+        toggleCheck: datalistActions.toggleCheck,
+      },
+      dispatch
+    )
 )(BaseFilter);
