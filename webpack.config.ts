@@ -16,7 +16,7 @@ const distDir = 'dist';
 const config: Configuration = {
   mode: isProduction ? 'production' : 'development',
   entry: {
-    deck: path.resolve(__dirname, 'src/deck/index.tsx'),
+    deck: path.resolve(__dirname, 'src/index.tsx'),
   },
   output: {
     path: path.resolve(__dirname, distDir),
@@ -40,8 +40,8 @@ const config: Configuration = {
       filename: `styles/${fileName}.css`,
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src/deck/index.html'),
-      filename: 'deck/index.html',
+      template: path.resolve(__dirname, 'src/index.html'),
+      filename: 'index.html',
       minify: {
         collapseWhitespace: isProduction,
         removeComments: isProduction,

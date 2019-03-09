@@ -2,7 +2,7 @@
   "name": "3594t-tools",
   "version": "1.0.0",
   "description": "",
-  "main": "src/deck/index.tsx",
+  "main": "src/index.tsx",
   "scripts": {
     "build": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
     "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack-dev-server",
