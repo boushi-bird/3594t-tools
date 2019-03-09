@@ -7,7 +7,11 @@ import FilterActions from '../../components/FilterActions';
 import SimpleFilter from '../../containers/SimpleFilter';
 import BaseFilter from '../../containers/BaseFilter';
 
-export interface Props {
+export interface StateFromProps extends WindowState {
+  openedAnyModal: boolean;
+}
+
+export interface DispatchFromProps {
   resetConditions(): void;
   fetchBaseData(): void;
   openFilter(): void;
@@ -16,7 +20,9 @@ export interface Props {
   changeActiveFilterTab(activeFilter: FilterTab): void;
 }
 
-export default class App extends React.PureComponent<Props & WindowState> {
+type Props = StateFromProps & DispatchFromProps;
+
+export default class App extends React.PureComponent<Props> {
   public componentDidMount(): void {
     this.props.fetchBaseData();
   }

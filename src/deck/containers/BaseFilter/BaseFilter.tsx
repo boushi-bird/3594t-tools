@@ -3,17 +3,17 @@ import React from 'react';
 import { FilterCondition, FilterContents } from '../../modules/datalist';
 import FilterButtonList from '../../components/FilterButtonList';
 
-export interface PropValue {
+export interface StateFromProps {
   filterCondition: FilterCondition;
   filterContents: FilterContents;
 }
 
-export interface PropActions {
+export interface DispatchFromProps {
   setCondition: (condition: Partial<FilterCondition>) => void;
   toggleCheck: (key: keyof FilterCondition, value: string) => void;
 }
 
-type Props = PropValue & PropActions;
+type Props = StateFromProps & DispatchFromProps;
 
 export default class BaseFilter extends React.Component<Props> {
   public render(): React.ReactNode {

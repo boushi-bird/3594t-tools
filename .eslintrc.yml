@@ -30,3 +30,5 @@ rules:
     - off
   '@typescript-eslint/no-empty-interface':
     - off
+  prettier/prettier:
+    - warn

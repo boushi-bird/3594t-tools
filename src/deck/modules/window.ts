@@ -9,7 +9,6 @@ export type FilterTab = keyof typeof filterTabNames;
 
 export interface WindowState {
   openedFilter: boolean;
-  openedAnyModal: boolean;
   activeFilter: FilterTab;
 }
 
@@ -29,7 +28,6 @@ export const windowActions = {
 
 const initialState: WindowState = {
   openedFilter: false,
-  openedAnyModal: false,
   activeFilter: 'BASIC',
 };
 
@@ -42,17 +40,14 @@ export default function windowReducer(
       const {
         payload: { openedFilter },
       } = actions;
-      const openedAnyModal = openedFilter;
       return {
         ...state,
         openedFilter,
-        openedAnyModal,
       };
     case 'CLOSE_ALL_MODAL':
       return {
         ...state,
         openedFilter: false,
-        openedAnyModal: false,
       };
     case 'CHANGE_ACTIVE_FILTER':
       const {

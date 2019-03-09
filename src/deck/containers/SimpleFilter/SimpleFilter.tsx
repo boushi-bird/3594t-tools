@@ -3,16 +3,16 @@ import React from 'react';
 import { FilterCondition, FilterItem } from '../../modules/datalist';
 import FilterButtonList from '../../components/FilterButtonList';
 
-export interface PropValue {
+export interface StateFromProps {
   filterCondition: string[];
   filterContents: FilterItem[];
 }
 
-export interface PropActions {
+export interface DispatchFromProps {
   toggleCheck: (key: keyof FilterCondition, value: string) => void;
 }
 
-type Props = PropValue & PropActions;
+type Props = StateFromProps & DispatchFromProps;
 
 export default class SimpleFilter extends React.Component<Props> {
   public render(): React.ReactNode {
