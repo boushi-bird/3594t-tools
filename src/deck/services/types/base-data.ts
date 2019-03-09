@@ -1,4 +1,4 @@
-export interface General {
+interface General {
   readonly add_version: string;
   readonly belong: number;
   readonly buryoku: string;
@@ -46,7 +46,7 @@ interface GenSub {
   readonly name_short: string;
 }
 
-export interface Personal {
+interface Personal {
   readonly azana: string;
   readonly azana_ruby: string;
   readonly name: string;
@@ -57,7 +57,7 @@ interface Skill {
   readonly code: string;
   readonly key: string;
   readonly name: string;
-  readonly name_short: string;
+  readonly short_name: string;
 }
 
 interface State {

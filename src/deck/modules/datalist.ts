@@ -1,5 +1,5 @@
 import { ActionType, createAction } from 'typesafe-actions';
-import { BaseData } from '../api/load-data';
+import { BaseData } from '../services/map-basedata';
 
 export interface FilterItem {
   id: string;

@@ -1,8 +1,7 @@
-import {
-  BaseData as RawBaseData,
-  General as RawGeneral,
-  Personal,
-} from './types/base-data';
+import { BaseData as RawBaseData } from './types/base-data';
+
+type RawGeneral = RawBaseData['GENERAL'][number];
+type Personal = RawBaseData['PERSONAL'][number];
 
 interface IdItem {
   readonly id: string;
@@ -16,6 +15,12 @@ interface Item extends IdItem {
 }
 
 interface GeneralProps {
+  /** 登場弾(メジャー) */
+  readonly majorVersion: number;
+  /** 登場弾(追加) */
+  readonly addVersion: number;
+  /** EXカード */
+  readonly isEx: boolean;
   /** 武力 */
   readonly force: number;
   /** 知力 */
@@ -24,32 +29,62 @@ interface GeneralProps {
   readonly conquest: number;
   /** コスト */
   readonly cost?: Item;
+  /** 主将器 */
+  readonly genMains: ReadonlyArray<Item>;
   /** 官職 */
   readonly generalType?: Item;
   /** 武将名 */
   readonly personal?: Personal;
   /** レアリティ */
   readonly rarity?: Item;
+  /** 特技 */
+  readonly skills: ReadonlyArray<Item>;
   /** 勢力 */
   readonly state?: Item;
   /** 兵種 */
   readonly unitType?: Item;
 }
 
-export interface General extends IdItem, GeneralProps {
+interface General extends IdItem, GeneralProps {
+  /** コード */
   readonly code: string;
+  /** 登場弾 */
+  readonly version: string;
+  /** さんぽけあり */
+  readonly hasPocket: boolean;
 }
+
+const createVersionLabel = (
+  majorVersion: number,
+  addVersion = 0,
+  isEx = false
+): string => {
+  let add: string;
+  if (isEx) {
+    add = '-EX';
+  } else if (addVersion > 0) {
+    add = `-${addVersion}`;
+  } else {
+    add = '';
+  }
+  return `第${majorVersion}弾${add}`;
+};
 
 class GeneralImpl implements General {
   public readonly id: string;
   private readonly raw: RawGeneral;
+  public readonly majorVersion: number;
+  public readonly addVersion: number;
+  public readonly isEx: boolean;
   public readonly force: number;
   public readonly intelligence: number;
   public readonly conquest: number;
   public readonly cost?: Item;
+  public readonly genMains: ReadonlyArray<Item>;
   public readonly generalType?: Item;
   public readonly personal?: Personal;
   public readonly rarity?: Item;
+  public readonly skills: ReadonlyArray<Item>;
   public readonly state?: Item;
   public readonly unitType?: Item;
   public constructor(id: string, raw: RawGeneral, option: GeneralProps) {
@@ -60,17 +95,36 @@ class GeneralImpl implements General {
   public get code(): string {
     return this.raw.code;
   }
+  public get version(): string {
+    return createVersionLabel(this.majorVersion, this.addVersion, this.isEx);
+  }
+  public get hasPocket(): boolean {
+    return this.raw.pocket_code !== '';
+  }
 }
 
 export interface BaseData {
+  /** 勢力 */
   belongStates: Item[];
+  /** コスト */
   costs: Item[];
+  /** 兵種 */
   unitTypes: Item[];
+  /** 特技 */
   skills: Item[];
+  /** 主将器 */
   genMains: Item[];
+  /** レアリティ */
   rarities: Item[];
+  /** 官職 */
   generalTypes: Item[];
+  /** スターター/通常/Ex */
   varTypes: Item[];
+  /** 登場弾 */
+  versions: { [key: number]: number[] };
+  /** 登場弾(メジャーバージョン) */
+  majorVersions: number[];
+  /** 武将 */
   generals: General[];
 }
 
@@ -93,22 +147,24 @@ const toItem = (
     code,
     name,
     name_short: nameShort,
+    short_name: shortName,
   }: {
     code: string;
     name: string;
     name_short?: string;
+    short_name?: string;
   },
   id: string
 ): Item => ({
   id,
   code,
   name,
-  nameShort,
+  nameShort: nameShort || shortName,
 });
 
-export default async (): Promise<BaseData> => {
-  const res: Response = await fetch(process.env.BASE_DATA_URL as string);
-  const baseData: RawBaseData = await res.json();
+const plain = <S>(s: (S | undefined)[]): S[] => s.filter(v => v != null) as S[];
+
+export default (baseData: RawBaseData): BaseData => {
   // 勢力
   const belongStates = convertIdItem(baseData.STATE, idIsIndex, (s, id) => {
     const dist = toItem(s, id);
@@ -129,7 +185,6 @@ export default async (): Promise<BaseData> => {
   });
   // 特技
   const skills = convertIdItem(baseData.SKILL, idIsKey, toItem);
-  // 登場弾
   // 主将器
   const genMains = convertIdItem(baseData.GEN_MAIN, idIsKey, toItem);
   // レアリティ
@@ -151,26 +206,52 @@ export default async (): Promise<BaseData> => {
   );
   // スターター/通常/Ex
   const varTypes = convertIdItem(baseData.VER_TYPE, idIsIndex, toItem);
+  // 登場弾
+  const versions: { [key: number]: number[] } = {};
   // 武将
-  const generals = convertIdItem(
-    baseData.GENERAL,
-    idIsIndex,
-    (raw, id) =>
-      new GeneralImpl(id, raw, {
-        force: parseInt(raw.buryoku),
-        intelligence: parseInt(raw.chiryoku),
-        conquest: parseInt(raw.seiatsu),
-        cost: costs.find(v => v.id === raw.cost),
-        generalType: generalTypes.find(v => v.id === raw.general_type),
-        personal: baseData.PERSONAL[parseInt(raw.personal)],
-        rarity: rarities.find(v => v.id === raw.rarity),
-        state: belongStates.find(v => v.id === raw.state),
-        unitType: unitTypes.find(v => v.id === raw.unit_type),
-      })
-  );
-  console.log(baseData.GENERAL_TYPE);
-  console.log(varTypes);
-  console.log(generals[569]);
+  const generals = convertIdItem(baseData.GENERAL, idIsIndex, (raw, id) => {
+    const majorVersion = parseInt(raw.major_version);
+    const addVersion = parseInt(raw.add_version);
+    const isEx = raw.ver_type === '2';
+    if (!versions[majorVersion]) {
+      versions[majorVersion] = [];
+    }
+    if (!isEx && !versions[majorVersion].includes(addVersion)) {
+      versions[majorVersion].push(addVersion);
+    }
+    return new GeneralImpl(id, raw, {
+      majorVersion,
+      addVersion,
+      isEx,
+      force: parseInt(raw.buryoku),
+      intelligence: parseInt(raw.chiryoku),
+      conquest: parseInt(raw.seiatsu),
+      cost: costs.find(v => v.id === raw.cost),
+      genMains: plain(
+        [raw.gen_main0, raw.gen_main1, raw.gen_main2]
+          .filter(v => v !== '')
+          .map(v => genMains.find(g => g.id === v))
+      ),
+      generalType: generalTypes.find(v => v.id === raw.general_type),
+      personal: baseData.PERSONAL[parseInt(raw.personal)],
+      rarity: rarities.find(v => v.id === raw.rarity),
+      skills: plain(
+        [raw.skill0, raw.skill1, raw.skill2]
+          .filter(v => v !== '')
+          .map(v => skills.find(g => g.id === v))
+      ),
+      state: belongStates.find(v => v.id === raw.state),
+      unitType: unitTypes.find(v => v.id === raw.unit_type),
+    });
+  });
+  const majorVersions = Object.keys(versions).map(v => parseInt(v));
+  const sortNumber = (a: number, b: number): number => {
+    return a - b;
+  };
+  majorVersions.sort(sortNumber);
+  majorVersions.forEach(major => {
+    versions[major].sort(sortNumber);
+  });
   return {
     belongStates,
     costs,
@@ -180,6 +261,8 @@ export default async (): Promise<BaseData> => {
     rarities,
     generalTypes,
     varTypes,
+    versions,
+    majorVersions,
     generals,
   };
 };

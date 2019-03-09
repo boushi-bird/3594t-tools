@@ -4,7 +4,7 @@ import { windowActions } from '../../modules/window';
 import { datalistActions } from '../../modules/datalist';
 import { State } from '../../store';
 import App, { StateFromProps, DispatchFromProps } from './App';
-import loadData from '../../api/load-data';
+import { loadFromApi } from '../../services/load-data';
 
 export default connect<StateFromProps, DispatchFromProps>(
   (state: State) => ({
@@ -13,7 +13,8 @@ export default connect<StateFromProps, DispatchFromProps>(
   }),
   (dispatch: Dispatch) => ({
     fetchBaseData: async (): Promise<void> => {
-      const baseData = await loadData();
+      // TODO APIからかLocalからか選択してデータ取得させる
+      const baseData = await loadFromApi();
       dispatch(datalistActions.setBaseData(baseData));
     },
     ...bindActionCreators(
