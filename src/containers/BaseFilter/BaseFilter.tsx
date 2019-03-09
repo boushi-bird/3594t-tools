@@ -1,11 +1,11 @@
 import './BaseFilter.css';
 import React from 'react';
-import { FilterCondition, FilterContents } from '../../modules/datalist';
+import { DatalistState, FilterCondition } from '../../modules/datalist';
 import FilterButtonList from '../../components/FilterButtonList';
 
 export interface StateFromProps {
   filterCondition: FilterCondition;
-  filterContents: FilterContents;
+  filterContents: DatalistState['filterContents'];
 }
 
 export interface DispatchFromProps {

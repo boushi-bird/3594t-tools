@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { WindowState, filterTabNames, FilterTab } from '../../modules/window';
 import FilterTabs from '../../components/FilterTabs';
 import FilterActions from '../../components/FilterActions';
+import CardList from '../../containers/CardList';
 import SimpleFilter from '../../containers/SimpleFilter';
 import BaseFilter from '../../containers/BaseFilter';
 
@@ -48,6 +49,7 @@ export default class App extends React.PureComponent<Props> {
                 絞込
               </button>
             </div>
+            <CardList />
           </div>
           <div className={classNames(['card-filter-container', { open }])}>
             <h1 className="card-filter-title">絞り込みメニュー</h1>

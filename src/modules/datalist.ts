@@ -1,44 +1,46 @@
 import { ActionType, createAction } from 'typesafe-actions';
-import { BaseData } from '../services/map-basedata';
+import { BaseData, FilterItem, FilterContents } from '../services/map-basedata';
 
-export interface FilterItem {
-  id: string;
-  code: string;
-  name: string;
-  nameShort?: string;
-  color?: string;
-}
+export type FilterItem = FilterItem;
 
-const initialFilterCondition: {
+export interface FilterCondition {
   belongStates: string[];
   costs: string[];
   unitTypes: string[];
   searchText: string;
-} = {
+}
+
+const initialFilterCondition: FilterCondition = {
   belongStates: [],
   costs: [],
   unitTypes: [],
   searchText: '',
 };
 
-const initialFilterContents: {
-  belongStates: FilterItem[];
-  costs: FilterItem[];
-  unitTypes: FilterItem[];
-} = {
+const initialFilterContents: FilterContents = {
   belongStates: [],
   costs: [],
   unitTypes: [],
+  skills: [],
+  genMains: [],
+  rarities: [],
+  generalTypes: [],
+  varTypes: [],
+  versions: [],
+  majorVersions: [],
 };
 
-const initialState = {
+export interface DatalistState {
+  filterCondition: FilterCondition;
+  filterContents: FilterContents;
+  generals: BaseData['generals'];
+}
+
+const initialState: DatalistState = {
   filterCondition: initialFilterCondition,
   filterContents: initialFilterContents,
+  generals: [],
 };
-
-export type FilterCondition = typeof initialFilterCondition;
-export type FilterContents = typeof initialFilterContents;
-export type DatalistState = typeof initialState;
 
 export const datalistActions = {
   resetConditions: createAction('RESET_CONDITIONS'),
@@ -101,13 +103,12 @@ export default function datalistReducer(
       }
     case 'SET_BASE_DATA':
       const baseData = actions.payload.baseData;
-      const filterContents: FilterContents = {
-        ...baseData,
-      };
+      const { generals, filterContents } = baseData;
       return {
         ...state,
         filterCondition: initialFilterCondition,
         filterContents,
+        generals,
       };
     default:
       return state;

@@ -7,12 +7,20 @@ interface IdItem {
   readonly id: string;
 }
 
-interface Item extends IdItem {
+interface Item {
   readonly code: string;
   readonly name: string;
   readonly nameShort?: string;
   readonly color?: string;
+  readonly thinColor?: string;
 }
+
+export interface FilterItem extends Item, IdItem {}
+
+type RawStrategy = RawBaseData['STRAT'][number];
+
+interface Strategy
+  extends Pick<RawStrategy, Exclude<keyof RawStrategy, 'key'>> {}
 
 interface GeneralProps {
   /** 登場弾(メジャー) */
@@ -28,26 +36,31 @@ interface GeneralProps {
   /** 征圧力 */
   readonly conquest: number;
   /** コスト */
-  readonly cost?: Item;
+  readonly cost: Item;
   /** 主将器 */
-  readonly genMains: ReadonlyArray<Item>;
+  readonly genMains: ReadonlyArray<FilterItem>;
   /** 官職 */
-  readonly generalType?: Item;
+  readonly generalType: Item;
   /** 武将名 */
   readonly personal?: Personal;
   /** レアリティ */
-  readonly rarity?: Item;
+  readonly rarity: Item;
   /** 特技 */
-  readonly skills: ReadonlyArray<Item>;
+  readonly skills: ReadonlyArray<FilterItem>;
   /** 勢力 */
-  readonly state?: Item;
+  readonly state: Item;
   /** 兵種 */
-  readonly unitType?: Item;
+  readonly unitType: Item;
+  /** 計略 */
+  readonly strategy?: Strategy;
 }
 
 interface General extends IdItem, GeneralProps {
+  readonly raw: RawGeneral;
   /** コード */
   readonly code: string;
+  /** 武将名 */
+  readonly name: string;
   /** 登場弾 */
   readonly version: string;
   /** さんぽけあり */
@@ -72,21 +85,22 @@ const createVersionLabel = (
 
 class GeneralImpl implements General {
   public readonly id: string;
-  private readonly raw: RawGeneral;
+  public readonly raw: RawGeneral;
   public readonly majorVersion: number;
   public readonly addVersion: number;
   public readonly isEx: boolean;
   public readonly force: number;
   public readonly intelligence: number;
   public readonly conquest: number;
-  public readonly cost?: Item;
-  public readonly genMains: ReadonlyArray<Item>;
-  public readonly generalType?: Item;
+  public readonly cost: Item;
+  public readonly genMains: ReadonlyArray<FilterItem>;
+  public readonly generalType: Item;
   public readonly personal?: Personal;
-  public readonly rarity?: Item;
-  public readonly skills: ReadonlyArray<Item>;
-  public readonly state?: Item;
-  public readonly unitType?: Item;
+  public readonly rarity: Item;
+  public readonly skills: ReadonlyArray<FilterItem>;
+  public readonly state: Item;
+  public readonly unitType: Item;
+  public readonly strategy?: Strategy;
   public constructor(id: string, raw: RawGeneral, option: GeneralProps) {
     this.id = id;
     this.raw = raw;
@@ -94,6 +108,12 @@ class GeneralImpl implements General {
   }
   public get code(): string {
     return this.raw.code;
+  }
+  public get name(): string {
+    if (!this.personal) {
+      return '';
+    }
+    return this.personal.name;
   }
   public get version(): string {
     return createVersionLabel(this.majorVersion, this.addVersion, this.isEx);
@@ -103,29 +123,35 @@ class GeneralImpl implements General {
   }
 }
 
-export interface BaseData {
+export interface FilterContents {
   /** 勢力 */
-  belongStates: Item[];
+  belongStates: FilterItem[];
   /** コスト */
-  costs: Item[];
+  costs: FilterItem[];
   /** 兵種 */
-  unitTypes: Item[];
+  unitTypes: FilterItem[];
   /** 特技 */
-  skills: Item[];
+  skills: FilterItem[];
   /** 主将器 */
-  genMains: Item[];
+  genMains: FilterItem[];
   /** レアリティ */
-  rarities: Item[];
+  rarities: FilterItem[];
   /** 官職 */
-  generalTypes: Item[];
+  generalTypes: FilterItem[];
   /** スターター/通常/Ex */
-  varTypes: Item[];
+  varTypes: FilterItem[];
   /** 登場弾 */
   versions: { [key: number]: number[] };
   /** 登場弾(メジャーバージョン) */
   majorVersions: number[];
+}
+
+export interface BaseData {
+  filterContents: FilterContents;
   /** 武将 */
   generals: General[];
+  /** 計略 */
+  strategies: Strategy[];
 }
 
 const idIsIndex = <V>(_v: V, i: number): string => `${i}`;
@@ -155,12 +181,25 @@ const toItem = (
     short_name?: string;
   },
   id: string
-): Item => ({
+): FilterItem => ({
   id,
   code,
   name,
   nameShort: nameShort || shortName,
 });
+
+const emptyItem: Item = {
+  code: '',
+  name: '',
+};
+
+const findById = (filterItems: FilterItem[], id: string): Item => {
+  const item = filterItems.find(v => v.id === id);
+  if (!item) {
+    return emptyItem;
+  }
+  return item;
+};
 
 const plain = <S>(s: (S | undefined)[]): S[] => s.filter(v => v != null) as S[];
 
@@ -171,6 +210,7 @@ export default (baseData: RawBaseData): BaseData => {
     return {
       ...dist,
       color: `rgb(${s.red}, ${s.green}, ${s.blue})`,
+      thinColor: `rgba(${s.red}, ${s.green}, ${s.blue}, 0.2)`,
     };
   });
   // コスト
@@ -206,6 +246,11 @@ export default (baseData: RawBaseData): BaseData => {
   );
   // スターター/通常/Ex
   const varTypes = convertIdItem(baseData.VER_TYPE, idIsIndex, toItem);
+  // 計略
+  const strategies = convertIdItem(baseData.STRAT, idIsKey, (strat, id) => ({
+    id,
+    ...strat,
+  }));
   // 登場弾
   const versions: { [key: number]: number[] } = {};
   // 武将
@@ -226,22 +271,23 @@ export default (baseData: RawBaseData): BaseData => {
       force: parseInt(raw.buryoku),
       intelligence: parseInt(raw.chiryoku),
       conquest: parseInt(raw.seiatsu),
-      cost: costs.find(v => v.id === raw.cost),
+      cost: findById(costs, raw.cost),
       genMains: plain(
         [raw.gen_main0, raw.gen_main1, raw.gen_main2]
           .filter(v => v !== '')
           .map(v => genMains.find(g => g.id === v))
       ),
-      generalType: generalTypes.find(v => v.id === raw.general_type),
+      generalType: findById(generalTypes, raw.general_type),
       personal: baseData.PERSONAL[parseInt(raw.personal)],
-      rarity: rarities.find(v => v.id === raw.rarity),
+      rarity: findById(rarities, raw.rarity),
       skills: plain(
         [raw.skill0, raw.skill1, raw.skill2]
-          .filter(v => v !== '')
+          .filter(v => v !== '' && v !== '0')
           .map(v => skills.find(g => g.id === v))
       ),
-      state: belongStates.find(v => v.id === raw.state),
-      unitType: unitTypes.find(v => v.id === raw.unit_type),
+      state: findById(belongStates, raw.state),
+      unitType: findById(unitTypes, raw.unit_type),
+      strategy: strategies.find(v => v.id === raw.strat),
     });
   });
   const majorVersions = Object.keys(versions).map(v => parseInt(v));
@@ -253,16 +299,19 @@ export default (baseData: RawBaseData): BaseData => {
     versions[major].sort(sortNumber);
   });
   return {
-    belongStates,
-    costs,
-    unitTypes,
-    skills,
-    genMains,
-    rarities,
-    generalTypes,
-    varTypes,
-    versions,
-    majorVersions,
+    filterContents: {
+      belongStates,
+      costs,
+      unitTypes,
+      skills,
+      genMains,
+      rarities,
+      generalTypes,
+      varTypes,
+      versions,
+      majorVersions,
+    },
     generals,
+    strategies,
   };
 };
