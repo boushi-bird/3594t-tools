@@ -40,16 +40,45 @@ export default class DetailFilter extends React.PureComponent<Props> {
       setCondition,
       toggleCheckList,
     } = this.props;
+    const versionElements: JSX.Element[] = [];
+    if (filterCondition.enableDetailVersion) {
+      filterContents.versions.forEach((version, i) => {
+        versionElements.push(
+          <FilterButtonList
+            key={i + 1}
+            itemName="versions"
+            items={version}
+            checkedItems={filterCondition.versions}
+            onClickItem={toggleCheckList}
+          />
+        );
+      });
+    } else {
+      versionElements.push(
+        <FilterButtonList
+          key={0}
+          itemName="majorVersions"
+          items={filterContents.majorVersions}
+          checkedItems={filterCondition.majorVersions}
+          onClickItem={toggleCheckList}
+        />
+      );
+    }
     return (
       <div>
         <section className="filter-section">
           <h2 className="title">登場弾</h2>
-          <FilterButtonList
-            itemName="majorVersions"
-            items={filterContents.majorVersions}
-            checkedItems={filterCondition.majorVersions}
-            onClickItem={toggleCheckList}
-          />
+          <div className="title-button">
+            <SwitchItem
+              itemName="enableDetailVersion"
+              setCondition={setCondition}
+              isOn={filterCondition.enableDetailVersion}
+              labelOff="メジャーVer"
+              labelOn="詳細Ver"
+              width={220}
+            />
+          </div>
+          {versionElements}
         </section>
         <section className="filter-section">
           <h2 className="title">将器主効果候補</h2>

@@ -17,7 +17,9 @@ export default connect<StateFromProps, DispatchFromProps>(
         rarities,
         generalTypes,
         varTypes,
+        versions,
         majorVersions,
+        enableDetailVersion,
         pockets,
       },
     } = state.datalistReducer;
@@ -52,11 +54,17 @@ export default connect<StateFromProps, DispatchFromProps>(
       if (rarities.length > 0 && !rarities.includes(raw.rarity)) {
         return false;
       }
-      if (
-        majorVersions.length > 0 &&
-        !majorVersions.includes(raw.major_version)
-      ) {
-        return false;
+      if (enableDetailVersion) {
+        if (versions.length > 0 && !versions.includes(general.versionValue)) {
+          return false;
+        }
+      } else {
+        if (
+          majorVersions.length > 0 &&
+          !majorVersions.includes(raw.major_version)
+        ) {
+          return false;
+        }
       }
       if (genMains.length > 0) {
         const hasGenMain = (v: string): boolean =>

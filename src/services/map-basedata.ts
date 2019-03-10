@@ -63,12 +63,14 @@ interface General extends IdItem, GeneralProps {
   readonly name: string;
   /** 登場弾 */
   readonly version: string;
+  /** 登場弾(内部値) */
+  readonly versionValue: string;
   /** さんぽけあり */
   readonly hasPocket: boolean;
 }
 
 const createVersionLabel = (
-  majorVersion: number,
+  majorVersion: number | string,
   addVersion = 0,
   isEx = false
 ): string => {
@@ -118,6 +120,10 @@ class GeneralImpl implements General {
   public get version(): string {
     return createVersionLabel(this.majorVersion, this.addVersion, this.isEx);
   }
+  public get versionValue(): string {
+    const add = this.isEx ? '-EX' : `-${this.addVersion}`;
+    return `${this.majorVersion}${add}`;
+  }
   public get hasPocket(): boolean {
     return this.raw.pocket_code !== '';
   }
@@ -140,8 +146,8 @@ export interface FilterContents {
   generalTypes: FilterItem[];
   /** スターター/通常/Ex */
   varTypes: FilterItem[];
-  /** 登場弾 */
-  versions: { [key: number]: number[] };
+  /** 登場弾(メジャーバージョン) */
+  versions: FilterItem[][];
   /** 登場弾(メジャーバージョン) */
   majorVersions: FilterItem[];
 }
@@ -320,11 +326,23 @@ export default (baseData: RawBaseData): BaseData => {
       rarities,
       generalTypes,
       varTypes,
-      versions,
-      majorVersions: majorVersions.map(v => ({
-        id: `${v}`,
-        name: createVersionLabel(v),
-      })),
+      versions: Object.entries(versions).map(([k, addVersions]) => {
+        const items = convertIdItem(
+          addVersions,
+          v => `${k}-${v}`,
+          (v, id) => ({ id, name: createVersionLabel(k, v) })
+        );
+        items.push({
+          id: `${k}-EX`,
+          name: createVersionLabel(k, 0, true),
+        });
+        return items;
+      }),
+      majorVersions: convertIdItem(
+        majorVersions,
+        v => `${v}`,
+        (v, id) => ({ id, name: createVersionLabel(v) })
+      ),
     },
     generals,
     strategies,
