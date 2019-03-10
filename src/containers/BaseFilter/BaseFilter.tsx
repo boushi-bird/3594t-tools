@@ -2,6 +2,8 @@ import './BaseFilter.css';
 import React from 'react';
 import { DatalistState, FilterCondition } from '../../modules/datalist';
 import FilterButtonList from '../../components/FilterButtonList';
+import SkillButtonList from '../../components/SkillButtonList';
+import SwitchItem from '../../components/SwitchItem';
 
 export interface StateFromProps {
   filterCondition: FilterCondition;
@@ -10,14 +12,20 @@ export interface StateFromProps {
 
 export interface DispatchFromProps {
   setCondition: (condition: Partial<FilterCondition>) => void;
-  toggleCheck: (key: keyof FilterCondition, value: string) => void;
+  toggleCheckList: (key: keyof FilterCondition, value: string) => void;
+  toggleCheck: (key: keyof FilterCondition, value: boolean) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;
 
-export default class BaseFilter extends React.Component<Props> {
+export default class BaseFilter extends React.PureComponent<Props> {
   public render(): React.ReactNode {
-    const { filterContents, filterCondition, toggleCheck } = this.props;
+    const {
+      filterContents,
+      filterCondition,
+      setCondition,
+      toggleCheckList,
+    } = this.props;
     return (
       <div>
         <section className="filter-section">
@@ -26,7 +34,7 @@ export default class BaseFilter extends React.Component<Props> {
             itemName="belongStates"
             items={filterContents.belongStates}
             checkedItems={filterCondition.belongStates}
-            onClickItem={toggleCheck}
+            onClickItem={toggleCheckList}
             square={true}
           />
         </section>
@@ -36,7 +44,7 @@ export default class BaseFilter extends React.Component<Props> {
             itemName="costs"
             items={filterContents.costs}
             checkedItems={filterCondition.costs}
-            onClickItem={toggleCheck}
+            onClickItem={toggleCheckList}
             square={true}
           />
         </section>
@@ -46,7 +54,26 @@ export default class BaseFilter extends React.Component<Props> {
             itemName="unitTypes"
             items={filterContents.unitTypes}
             checkedItems={filterCondition.unitTypes}
-            onClickItem={toggleCheck}
+            onClickItem={toggleCheckList}
+            square={true}
+          />
+        </section>
+        <section className="filter-section">
+          <h2 className="title">特技</h2>
+          <div className="title-button">
+            <SwitchItem
+              itemName="skillsAnd"
+              setCondition={setCondition}
+              isOn={filterCondition.skillsAnd}
+              labelOff="OR"
+              labelOn="AND"
+            />
+          </div>
+          <SkillButtonList
+            itemName="skills"
+            items={filterContents.skills}
+            checkedItems={filterCondition.skills}
+            onClickItem={toggleCheckList}
             square={true}
           />
         </section>

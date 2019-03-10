@@ -7,6 +7,7 @@ import FilterActions from '../../components/FilterActions';
 import CardList from '../../containers/CardList';
 import SimpleFilter from '../../containers/SimpleFilter';
 import BaseFilter from '../../containers/BaseFilter';
+import DetailFilter from '../../containers/DetailFilter';
 
 export interface StateFromProps extends WindowState {
   openedAnyModal: boolean;
@@ -78,7 +79,7 @@ export default class App extends React.PureComponent<Props> {
                 { active: activeFilter === 'DETAIL' },
               ])}
             >
-              detail
+              <DetailFilter />
             </div>
           </div>
         </div>

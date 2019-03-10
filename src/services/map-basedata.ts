@@ -8,7 +8,7 @@ interface IdItem {
 }
 
 interface Item {
-  readonly code: string;
+  readonly code?: string;
   readonly name: string;
   readonly nameShort?: string;
   readonly color?: string;
@@ -143,7 +143,7 @@ export interface FilterContents {
   /** 登場弾 */
   versions: { [key: number]: number[] };
   /** 登場弾(メジャーバージョン) */
-  majorVersions: number[];
+  majorVersions: FilterItem[];
 }
 
 export interface BaseData {
@@ -189,7 +189,6 @@ const toItem = (
 });
 
 const emptyItem: Item = {
-  code: '',
   name: '',
 };
 
@@ -202,6 +201,9 @@ const findById = (filterItems: FilterItem[], id: string): Item => {
 };
 
 const plain = <S>(s: (S | undefined)[]): S[] => s.filter(v => v != null) as S[];
+
+const noSkillId = '0';
+const exVerTypeId = '2';
 
 export default (baseData: RawBaseData): BaseData => {
   // 勢力
@@ -245,7 +247,17 @@ export default (baseData: RawBaseData): BaseData => {
     }
   );
   // スターター/通常/Ex
-  const varTypes = convertIdItem(baseData.VER_TYPE, idIsIndex, toItem);
+  const varTypes = convertIdItem(baseData.VER_TYPE, idIsIndex, toItem).map(
+    v => {
+      if (v.name === 'Ex') {
+        return {
+          ...v,
+          name: 'EX',
+        };
+      }
+      return v;
+    }
+  );
   // 計略
   const strategies = convertIdItem(baseData.STRAT, idIsKey, (strat, id) => ({
     id,
@@ -257,7 +269,7 @@ export default (baseData: RawBaseData): BaseData => {
   const generals = convertIdItem(baseData.GENERAL, idIsIndex, (raw, id) => {
     const majorVersion = parseInt(raw.major_version);
     const addVersion = parseInt(raw.add_version);
-    const isEx = raw.ver_type === '2';
+    const isEx = raw.ver_type === exVerTypeId;
     if (!versions[majorVersion]) {
       versions[majorVersion] = [];
     }
@@ -282,7 +294,7 @@ export default (baseData: RawBaseData): BaseData => {
       rarity: findById(rarities, raw.rarity),
       skills: plain(
         [raw.skill0, raw.skill1, raw.skill2]
-          .filter(v => v !== '' && v !== '0')
+          .filter(v => v !== '' && v !== noSkillId)
           .map(v => skills.find(g => g.id === v))
       ),
       state: findById(belongStates, raw.state),
@@ -309,7 +321,10 @@ export default (baseData: RawBaseData): BaseData => {
       generalTypes,
       varTypes,
       versions,
-      majorVersions,
+      majorVersions: majorVersions.map(v => ({
+        id: `${v}`,
+        name: createVersionLabel(v),
+      })),
     },
     generals,
     strategies,

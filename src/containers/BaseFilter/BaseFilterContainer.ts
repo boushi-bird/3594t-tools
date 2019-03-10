@@ -10,6 +10,7 @@ export default connect<StateFromProps, DispatchFromProps>(
     bindActionCreators(
       {
         setCondition: datalistActions.setCondition,
+        toggleCheckList: datalistActions.toggleCheckList,
         toggleCheck: datalistActions.toggleCheck,
       },
       dispatch

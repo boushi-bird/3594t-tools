@@ -7,6 +7,15 @@ export interface FilterCondition {
   belongStates: string[];
   costs: string[];
   unitTypes: string[];
+  skills: string[];
+  skillsAnd: boolean;
+  genMains: string[];
+  genMainsAnd: boolean;
+  rarities: string[];
+  generalTypes: string[];
+  varTypes: string[];
+  majorVersions: string[];
+  pockets: string[];
   searchText: string;
 }
 
@@ -14,6 +23,15 @@ const initialFilterCondition: FilterCondition = {
   belongStates: [],
   costs: [],
   unitTypes: [],
+  skills: [],
+  skillsAnd: false,
+  genMains: [],
+  genMainsAnd: false,
+  rarities: [],
+  generalTypes: [],
+  varTypes: [],
+  majorVersions: [],
+  pockets: [],
   searchText: '',
 };
 
@@ -48,9 +66,14 @@ export const datalistActions = {
     'SET_CONDITION',
     action => (condition: Partial<FilterCondition>) => action({ condition })
   ),
+  toggleCheckList: createAction(
+    'TOGGLE_CHECK_LIST',
+    action => (key: keyof FilterCondition, value: string) =>
+      action({ key, value })
+  ),
   toggleCheck: createAction(
     'TOGGLE_CHECK',
-    action => (key: keyof FilterCondition, value: string) =>
+    action => (key: keyof FilterCondition, value: boolean) =>
       action({ key, value })
   ),
   setBaseData: createAction('SET_BASE_DATA', action => (baseData: BaseData) =>
@@ -63,13 +86,13 @@ export default function datalistReducer(
   actions: ActionType<typeof datalistActions>
 ): DatalistState {
   switch (actions.type) {
-    case 'RESET_CONDITIONS':
+    case 'RESET_CONDITIONS': {
       return {
         ...state,
         filterCondition: initialFilterCondition,
       };
-    case 'SET_CONDITION':
-      // TODO
+    }
+    case 'SET_CONDITION': {
       return {
         ...state,
         filterCondition: {
@@ -77,7 +100,8 @@ export default function datalistReducer(
           ...actions.payload.condition,
         },
       };
-    case 'TOGGLE_CHECK':
+    }
+    case 'TOGGLE_CHECK_LIST': {
       const { key, value } = actions.payload;
       const targetCondition = state.filterCondition[key];
       if (!(targetCondition instanceof Array)) {
@@ -101,7 +125,20 @@ export default function datalistReducer(
           },
         };
       }
-    case 'SET_BASE_DATA':
+    }
+    case 'TOGGLE_CHECK': {
+      const { key, value } = actions.payload;
+      const targetCondition = state.filterCondition[key];
+      if (!(targetCondition instanceof Boolean)) {
+        console.warn(`${key} is not boolean.`);
+        return state;
+      }
+      return {
+        ...state,
+        [key]: !value,
+      };
+    }
+    case 'SET_BASE_DATA': {
       const baseData = actions.payload.baseData;
       const { generals, filterContents } = baseData;
       return {
@@ -110,6 +147,7 @@ export default function datalistReducer(
         filterContents,
         generals,
       };
+    }
     default:
       return state;
   }

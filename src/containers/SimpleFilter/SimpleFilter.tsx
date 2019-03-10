@@ -9,14 +9,14 @@ export interface StateFromProps {
 }
 
 export interface DispatchFromProps {
-  toggleCheck: (key: keyof FilterCondition, value: string) => void;
+  toggleCheckList: (key: keyof FilterCondition, value: string) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;
 
 export default class SimpleFilter extends React.Component<Props> {
   public render(): React.ReactNode {
-    const { filterContents, filterCondition, toggleCheck } = this.props;
+    const { filterContents, filterCondition, toggleCheckList } = this.props;
     return (
       <section className="simple-filter-section">
         <div className="simple-filter-state">
@@ -25,7 +25,7 @@ export default class SimpleFilter extends React.Component<Props> {
             itemName="belongStates"
             items={filterContents}
             checkedItems={filterCondition}
-            onClickItem={toggleCheck}
+            onClickItem={toggleCheckList}
             square={true}
           />
         </div>

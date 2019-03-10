@@ -23,9 +23,10 @@ interface Props {
 
 const defaultClasses = ['button', 'filter-item'];
 
-export default class BaseFilter extends React.PureComponent<Props> {
+export default class FilterButtonList extends React.PureComponent<Props> {
   private buttonClasses: string[];
   private square: boolean;
+
   public constructor(props: Props) {
     super(props);
     this.buttonClasses = props.addtionalClasses
@@ -33,6 +34,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
       : defaultClasses;
     this.square = this.props.square || false;
   }
+
   private handleClickItem = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
@@ -41,28 +43,44 @@ export default class BaseFilter extends React.PureComponent<Props> {
     onClickItem(itemName, value);
   };
 
+  protected createButton(
+    value: string,
+    label: string,
+    style: React.CSSProperties,
+    className: string
+  ): JSX.Element {
+    return (
+      <button
+        key={value}
+        value={value}
+        style={style}
+        className={className}
+        onClick={this.handleClickItem}
+      >
+        {label}
+      </button>
+    );
+  }
+
   public render(): React.ReactNode {
     const { checkedItems, items } = this.props;
     const square = this.square;
     const buttons: JSX.Element[] = [];
     items.forEach(item => {
       const value = item.id;
-      const label = square ? item.nameShort || item.name : item.name;
+      const label = item.nameShort || item.name;
       const style: React.CSSProperties = {};
       if (item.color) {
         style.backgroundColor = item.color;
       }
       const checked = checkedItems.includes(value);
       buttons.push(
-        <button
-          key={value}
-          value={value}
-          style={style}
-          className={classNames(this.buttonClasses, { checked, square })}
-          onClick={this.handleClickItem}
-        >
-          {label}
-        </button>
+        this.createButton(
+          value,
+          label,
+          style,
+          classNames(this.buttonClasses, { checked, square })
+        )
       );
     });
     return <div className="button-list">{buttons}</div>;
